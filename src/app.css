@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 
 @theme {
 	/* Monochrome Palette - Avoid absolute 0% or 100% to allow brightness filters */
@@ -23,6 +24,8 @@
 
 	--color-md-error: oklch(0.4 0 0);
 	--color-md-outline: oklch(0.8 0 0);
+
+	--animate-spin-slow: spin 3s linear infinite;
 
 	--radius-3xl: 24px;
 	--radius-4xl: 32px;

@@ -178,7 +178,9 @@
 <div class="flex flex-col gap-8">
 	<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 		<div>
-			<h2 class="text-3xl md:text-5xl font-black text-md-on-surface tracking-tighter uppercase">Rimborsi</h2>
+			<h2 class="text-3xl md:text-5xl font-black text-md-on-surface tracking-tighter uppercase">
+				Rimborsi
+			</h2>
 			<p
 				class="text-[10px] font-black uppercase tracking-[0.3em] text-md-on-surface-variant/60 mt-1"
 			>
@@ -187,15 +189,24 @@
 		</div>
 		<div class="flex flex-wrap gap-3">
 			<Button variant="primary" onclick={openNew}>
-				<Plus size={20} strokeWidth={3} />
+				<Plus size={22} strokeWidth={2.5} />
 				<span class="hidden md:inline">Aggiungi</span>
 			</Button>
-			<Button variant="secondary" onclick={syncTrenitalia} disabled={loading}>
-				<RefreshCw size={20} class={loading ? 'animate-spin' : ''} strokeWidth={3} />
+			<Button
+				variant="secondary"
+				onclick={syncTrenitalia}
+				disabled={loading}
+				class="hover:bg-md-on-surface hover:text-md-surface transition-all"
+			>
+				<RefreshCw size={20} class={loading ? 'animate-spin' : ''} strokeWidth={2.5} />
 				<span class="hidden md:inline">{loading ? syncStatus : 'Sync Trenitalia'}</span>
 			</Button>
-			<Button variant="secondary" onclick={exportPdf}>
-				<Download size={20} strokeWidth={3} />
+			<Button
+				variant="secondary"
+				onclick={exportPdf}
+				class="hover:bg-md-on-surface hover:text-md-surface transition-all"
+			>
+				<Download size={20} strokeWidth={2.5} />
 				<span class="hidden md:inline">Esporta PDF</span>
 			</Button>
 		</div>
@@ -203,10 +214,10 @@
 
 	{#if !store.state.trenitaliaUser}
 		<div
-			class="border-2 border-md-on-surface p-6 flex items-center justify-between animate-in fade-in duration-300"
+			class="border-2 border-md-on-surface p-6 flex items-center justify-between animate-in fade-in"
 		>
 			<div class="flex items-center gap-3">
-				<Settings size={20} strokeWidth={3} />
+				<Settings size={22} strokeWidth={2.5} class="animate-spin-slow" />
 				<span class="text-[10px] font-black uppercase tracking-widest"
 					>Configura le credenziali nelle impostazioni per importare i viaggi.</span
 				>
@@ -244,7 +255,11 @@
 							>{format(new Date(expense.date), 'dd MMM')}</TableCell
 						>
 						<TableCell>
-							<div class="font-black text-sm uppercase tracking-tight max-w-[120px] md:max-w-none truncate">{expense.description}</div>
+							<div
+								class="font-black text-sm uppercase tracking-tight max-w-[120px] md:max-w-none truncate"
+							>
+								{expense.description}
+							</div>
 							{#if expense.attachments.length}
 								<div
 									class="flex items-center gap-1 mt-1 text-[9px] font-black uppercase border-2 border-md-on-surface w-fit px-2 py-0.5 rounded-none opacity-60"
@@ -270,16 +285,16 @@
 								<Button
 									variant="icon"
 									onclick={() => edit(expense)}
-									class="!p-1 hover:border-md-on-surface/20 border border-transparent"
+									class="!p-1.5 hover:border-md-on-surface/20 border border-transparent"
 								>
-									<Pencil size={16} strokeWidth={3} />
+									<Pencil size={18} strokeWidth={2.5} />
 								</Button>
 								<Button
 									variant="icon"
 									onclick={() => remove(expense.id)}
-									class="!p-1 hover:border-md-on-surface/20 border border-transparent text-md-error"
+									class="!p-1.5 hover:border-md-on-surface/20 border border-transparent text-md-error"
 								>
-									<Trash2 size={16} strokeWidth={3} />
+									<Trash2 size={18} strokeWidth={2.5} />
 								</Button>
 							</div>
 						</TableCell>
@@ -288,7 +303,7 @@
 				{#if sortedExpenses.length === 0}
 					<tr>
 						<td colspan="5" class="p-24 text-center opacity-20">
-							<CreditCard size={64} strokeWidth={2} class="mx-auto mb-4" />
+							<CreditCard size={72} strokeWidth={1.5} class="mx-auto mb-4" />
 							<span class="text-xs font-black uppercase tracking-[0.3em]"
 								>Nessuna spesa registrata</span
 							>

@@ -21,7 +21,10 @@
 
 <div class="max-w-2xl mx-auto flex flex-col gap-8 md:gap-12">
 	<div class="flex flex-col gap-2">
-		<h2 class="text-3xl md:text-5xl font-black text-md-on-surface tracking-tighter uppercase">Impostazioni</h2>
+		<h2 class="text-3xl md:text-5xl font-black text-md-on-surface tracking-tighter uppercase">
+			Impostazioni
+		</h2>
+
 		<p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-on-surface-variant/60">
 			Configurazione Profilo & Credenziali
 		</p>
@@ -29,18 +32,21 @@
 
 	<div class="space-y-8 md:space-y-12">
 		<!-- User Profile Section -->
+
 		<section class="space-y-6">
 			<div class="flex items-center gap-4 border-b-2 border-md-on-surface/5 pb-4">
-				<div class="bg-md-on-surface text-md-surface p-2 rounded-full">
-					<User size={20} strokeWidth={3} />
+				<div class="bg-md-on-surface text-md-surface p-2.5 rounded-full">
+					<User size={22} strokeWidth={2.5} />
 				</div>
+
 				<h3 class="text-lg md:text-xl font-black uppercase tracking-tight text-md-on-surface">
 					Profilo Utente
 				</h3>
 			</div>
 
-			<Card class="p-4 md:p-8">
+			<Card class="p-4 md:p-8 hover:border-md-primary/30 transition-colors">
 				<Input label="Nome e Cognome" placeholder="Mario Rossi" bind:value={store.state.userName} />
+
 				<p class="text-[9px] font-bold uppercase tracking-widest text-md-on-surface/40 mt-4 ml-1">
 					* Apparirà nell'intestazione e nelle firme dei PDF.
 				</p>
@@ -48,21 +54,26 @@
 		</section>
 
 		<!-- Trenitalia Credentials Section -->
+
 		<section class="space-y-6">
 			<div class="flex items-center gap-4 border-b-2 border-md-on-surface/5 pb-4">
-				<div class="bg-md-on-surface text-md-surface p-2 rounded-full">
-					<Lock size={20} strokeWidth={3} />
+				<div class="bg-md-on-surface text-md-surface p-2.5 rounded-full">
+					<Lock size={22} strokeWidth={2.5} />
 				</div>
-				<h3 class="text-lg md:text-xl font-black uppercase tracking-tight text-md-on-surface">Trenitalia</h3>
+
+				<h3 class="text-lg md:text-xl font-black uppercase tracking-tight text-md-on-surface">
+					Trenitalia
+				</h3>
 			</div>
 
-			<Card class="p-4 md:p-8 space-y-6">
+			<Card class="p-4 md:p-8 space-y-6 hover:border-md-primary/30 transition-colors">
 				<div class="grid grid-cols-1 gap-6">
 					<Input
 						label="Username"
 						placeholder="Il tuo username"
 						bind:value={store.state.trenitaliaUser}
 					/>
+
 					<Input
 						label="Password"
 						type="password"
@@ -81,12 +92,14 @@
 	</div>
 
 	<!-- Action Bar -->
+
 	<div class="flex items-center justify-end gap-6 pt-4 border-t-2 border-md-on-surface/5">
 		{#if saved}
 			<div
 				class="flex items-center gap-2 text-md-on-surface text-xs font-black uppercase tracking-widest animate-in fade-in slide-in-from-right-4 duration-300"
 			>
-				<CheckCircle2 size={16} strokeWidth={3} />
+				<CheckCircle2 size={18} strokeWidth={2.5} class="text-green-500" />
+
 				<span>Salvato</span>
 			</div>
 		{/if}
@@ -96,7 +109,8 @@
 			onclick={save}
 			class="px-12 py-4 text-xs tracking-[0.2em] uppercase font-black"
 		>
-			<Save size={18} strokeWidth={3} />
+			<Save size={20} strokeWidth={2.5} />
+
 			<span>Salva</span>
 		</Button>
 	</div>

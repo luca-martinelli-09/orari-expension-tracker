@@ -32,7 +32,7 @@
 		>
 			<Dialog.Content class="bg-md-background border-2 border-md-on-surface p-0 shadow-2xl">
 				<!-- Header -->
-				<div class="p-8 pb-4 flex justify-between items-start border-b-2 border-md-on-surface/5">
+				<div class="px-8 py-5 flex justify-between items-start border-b-2 border-md-on-surface/5">
 					<div>
 						<Dialog.Title class="text-3xl font-black uppercase tracking-tighter text-md-on-surface">
 							{title}
@@ -60,7 +60,7 @@
 				<!-- Footer -->
 				{#if footer}
 					<div
-						class="p-8 pt-4 border-t-2 border-md-on-surface/5 bg-md-surface-variant/10 flex justify-end gap-3 text-md-on-surface"
+						class="px-8 py-5 border-t-2 border-md-on-surface/5 bg-md-surface-variant/10 flex justify-end gap-3 text-md-on-surface"
 					>
 						{@render footer()}
 					</div>

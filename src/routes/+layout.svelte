@@ -49,25 +49,39 @@
 			<div
 				class="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0"
 			>
-				<div class="flex items-center gap-4 md:gap-8 w-full md:w-auto justify-between md:justify-start">
-					<div class="flex items-center gap-3">
-						<div class="bg-md-primary text-md-on-primary p-2.5 rounded-full">
-							<Calendar size={22} />
+				<div
+					class="flex items-center gap-4 md:gap-8 w-full md:w-auto justify-between md:justify-start"
+				>
+					<div class="flex items-center gap-3 group">
+						<div
+							class="bg-md-primary text-md-on-primary p-2.5 rounded-full transition-transform duration-500 group-hover:rotate-12"
+						>
+							<Calendar size={24} strokeWidth={2.5} />
 						</div>
-						<h1 class="text-xl font-bold tracking-tighter uppercase hidden sm:block">Journal</h1>
+						<h1 class="text-xl font-black tracking-tighter uppercase hidden sm:block">Journal</h1>
 					</div>
 
 					<div
 						class="flex items-center bg-md-surface-variant rounded-full border border-md-outline/20 p-1"
 					>
-						<Button variant="icon" onclick={prevMonth} class="!p-1.5 border-none">
-							<ChevronLeft size={18} />
+						<Button
+							variant="icon"
+							onclick={prevMonth}
+							class="!p-1.5 border-none hover:bg-md-on-surface/5"
+						>
+							<ChevronLeft size={20} />
 						</Button>
-						<span class="text-xs font-bold uppercase tracking-widest min-w-[140px] text-center">
+						<span
+							class="text-[10px] md:text-xs font-black uppercase tracking-widest min-w-[120px] md:min-w-[140px] text-center"
+						>
 							{format(currentDate, 'MMMM yyyy', { locale: it })}
 						</span>
-						<Button variant="icon" onclick={nextMonth} class="!p-1.5 border-none">
-							<ChevronRight size={18} />
+						<Button
+							variant="icon"
+							onclick={nextMonth}
+							class="!p-1.5 border-none hover:bg-md-on-surface/5"
+						>
+							<ChevronRight size={20} />
 						</Button>
 					</div>
 				</div>
@@ -78,10 +92,10 @@
 					{#each navItems as item}
 						<a
 							href={item.href}
-							class="px-4 py-2 md:px-6 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer whitespace-nowrap
-                            {$page.url.pathname === item.href
-								? 'bg-md-primary text-md-on-primary'
-								: 'text-md-on-surface-variant hover:bg-md-on-surface hover:text-md-background'}"
+							class="px-4 py-2 md:px-6 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest transition-all duration-300 cursor-pointer whitespace-nowrap
+					                            {$page.url.pathname === item.href
+								? 'bg-md-primary text-md-on-primary shadow-lg shadow-md-primary/20'
+								: 'text-md-on-surface-variant hover:bg-md-on-surface/10 hover:text-md-on-surface'}"
 						>
 							{item.label}
 						</a>
@@ -92,19 +106,19 @@
 					<Button
 						variant="icon"
 						onclick={() => store.toggleTheme()}
-						class="border border-md-outline/20"
+						class="border border-md-outline/20 hover:rotate-12 transition-transform"
 					>
 						{#if store.state.theme === 'light'}
-							<Moon size={20} />
+							<Moon size={22} />
 						{:else}
-							<Sun size={20} />
+							<Sun size={22} />
 						{/if}
 					</Button>
 				</div>
 			</div>
 		</nav>
 
-		<main class="flex-1 p-4 md:p-8 container mx-auto max-w-400 animate-in fade-in duration-700">
+		<main class="flex-1 p-4 md:p-8 container mx-auto max-w-[1600px] animate-in fade-in">
 			{@render children()}
 		</main>
 	</div>
