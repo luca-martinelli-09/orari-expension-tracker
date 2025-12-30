@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
-    let { children, class: className = '' } = $props<{ children: Snippet, class?: string }>();
+	let { children, class: className = '' } = $props<{ children: Snippet; class?: string }>();
 </script>
 
 <div class="bg-md-background border-2 border-md-onSurface overflow-hidden {className}">
-    {@render children()}
+	{@render children()}
 </div>

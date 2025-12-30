@@ -1,95 +1,105 @@
 <script lang="ts">
-    import { store } from '$lib/store.svelte';
-    import type { DayType, WorkDay } from '$lib/types';
-    import { Clock } from 'lucide-svelte';
-    import { slide } from 'svelte/transition';
-    import { untrack } from 'svelte';
-    import Modal from './ui/Modal.svelte';
-    import Button from './ui/Button.svelte';
-    import Select from './ui/Select.svelte';
-    import Input from './ui/Input.svelte';
-    import AttachmentManager from './ui/AttachmentManager.svelte';
+	import { store } from '$lib/store.svelte';
+	import type { DayType, WorkDay } from '$lib/types';
+	import { Clock } from 'lucide-svelte';
+	import { untrack } from 'svelte';
+	import { slide } from 'svelte/transition';
+	import AttachmentManager from './ui/AttachmentManager.svelte';
+	import Button from './ui/Button.svelte';
+	import Input from './ui/Input.svelte';
+	import Modal from './ui/Modal.svelte';
+	import Select from './ui/Select.svelte';
 
-    let { date, onClose } = $props<{ date: string, onClose: () => void }>();
+	let { date, onClose } = $props<{ date: string; onClose: () => void }>();
 
-    let day = $state<WorkDay>(untrack(() => structuredClone($state.snapshot(store.getDay(date)))));
-    
-    const types: DayType[] = ['Lavoro', 'Ferie', 'Malattia', 'Permesso', 'Chiusura', 'Festivo', 'Sabato', 'Domenica'];
+	let day = $state<WorkDay>(untrack(() => structuredClone($state.snapshot(store.getDay(date)))));
 
-    function save() {
-        store.updateDay(date, day);
-        onClose();
-    }
+	const types: DayType[] = [
+		'Lavoro',
+		'Ferie',
+		'Malattia',
+		'Permesso',
+		'Chiusura',
+		'Festivo',
+		'Sabato',
+		'Domenica'
+	];
 
-    function addFile(file: File) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            day.attachments.push({
-                id: crypto.randomUUID(),
-                name: file.name,
-                type: file.type,
-                data: e.target?.result as string
-            });
-        };
-        reader.readAsDataURL(file);
-    }
+	function save() {
+		store.updateDay(date, day);
+		onClose();
+	}
 
-    function handlePaste(e: ClipboardEvent) {
-        if (e.clipboardData && e.clipboardData.items) {
-            Array.from(e.clipboardData.items).forEach(item => {
-                if (item.kind === 'file') {
-                    const file = item.getAsFile();
-                    if (file) addFile(file);
-                }
-            });
-        }
-    }
+	function addFile(file: File) {
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			day.attachments.push({
+				id: crypto.randomUUID(),
+				name: file.name,
+				type: file.type,
+				data: e.target?.result as string
+			});
+		};
+		reader.readAsDataURL(file);
+	}
+
+	function handlePaste(e: ClipboardEvent) {
+		if (e.clipboardData && e.clipboardData.items) {
+			Array.from(e.clipboardData.items).forEach((item) => {
+				if (item.kind === 'file') {
+					const file = item.getAsFile();
+					if (file) addFile(file);
+				}
+			});
+		}
+	}
 </script>
 
 <svelte:window onpaste={handlePaste} />
 
-<Modal 
-    title="Aggiorna Giorno" 
-    subtitle={date} 
-    {onClose}
->
-    <div class="space-y-8">
-        <!-- Type Selector -->
-        <Select 
-            label="Tipologia Giornata" 
-            bind:value={day.type} 
-            options={types} 
-        />
+<Modal title="Aggiorna Giorno" subtitle={date} {onClose}>
+	<div class="space-y-8">
+		<!-- Type Selector -->
+		<Select label="Tipologia Giornata" bind:value={day.type} options={types} />
 
-        <!-- Hours Section -->
-        {#if day.type === 'Lavoro'}
-            <div transition:slide class="space-y-6 border-2 border-md-onSurface p-6 bg-md-surface-variant/5">
-                <div class="flex items-center gap-3 text-md-onSurface border-b-2 border-md-onSurface/5 pb-4">
-                    <Clock size={20} strokeWidth={3} />
-                    <span class="text-xs font-black uppercase tracking-[0.2em]">Orari Sessione</span>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-6">
-                    <Input label="Inizio Mattina" type="time" bind:value={day.morningStart} />
-                    <Input label="Fine Mattina" type="time" bind:value={day.morningEnd} />
-                </div>
-                <div class="grid grid-cols-2 gap-6">
-                    <Input label="Inizio Pomeriggio" type="time" bind:value={day.afternoonStart} />
-                    <Input label="Fine Pomeriggio" type="time" bind:value={day.afternoonEnd} />
-                </div>
-            </div>
-        {/if}
+		<!-- Hours Section -->
+		{#if day.type === 'Lavoro'}
+			<div
+				transition:slide
+				class="space-y-6 border-2 border-md-onSurface p-6 bg-md-surface-variant/5"
+			>
+				<div
+					class="flex items-center gap-3 text-md-onSurface border-b-2 border-md-onSurface/5 pb-4"
+				>
+					<Clock size={20} strokeWidth={3} />
+					<span class="text-xs font-black uppercase tracking-[0.2em]">Orari Sessione</span>
+				</div>
 
-        <!-- Attachment Manager -->
-        <AttachmentManager 
-            bind:attachments={day.attachments} 
-            onFileAdd={addFile} 
-            label="Documentazione / Certificati"
-        />
-    </div>
+				<div class="grid grid-cols-2 gap-6">
+					<Input label="Inizio Mattina" type="time" bind:value={day.morningStart} />
+					<Input label="Fine Mattina" type="time" bind:value={day.morningEnd} />
+				</div>
+				<div class="grid grid-cols-2 gap-6">
+					<Input label="Inizio Pomeriggio" type="time" bind:value={day.afternoonStart} />
+					<Input label="Fine Pomeriggio" type="time" bind:value={day.afternoonEnd} />
+				</div>
+			</div>
+		{/if}
 
-    {#snippet footer()}
-        <Button variant="ghost" onclick={onClose} class="uppercase tracking-widest text-[10px]">Chiudi</Button>
-        <Button variant="primary" onclick={save} class="uppercase tracking-widest text-[10px]">Salva Modifiche</Button>
-    {/snippet}
+		<!-- Attachment Manager -->
+		<AttachmentManager
+			bind:attachments={day.attachments}
+			onFileAdd={addFile}
+			label="Documentazione / Certificati"
+		/>
+	</div>
+
+	{#snippet footer()}
+		<Button variant="ghost" onclick={onClose} class="uppercase tracking-widest text-[10px]"
+			>Chiudi</Button
+		>
+		<Button variant="primary" onclick={save} class="uppercase tracking-widest text-[10px]"
+			>Salva Modifiche</Button
+		>
+	{/snippet}
 </Modal>
