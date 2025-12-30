@@ -4,6 +4,8 @@
     import ExpenseEditor from '$lib/components/ExpenseEditor.svelte';
     import { generateExpensesPdf } from '$lib/pdf';
     import { Download, Plus, RefreshCw, Trash2, FileText, Settings, CreditCard, Pencil } from 'lucide-svelte';
+    import Alert from '$lib/components/ui/Alert.svelte';
+    import Badge from '$lib/components/ui/Badge.svelte';
 
     let showEditor = $state(false);
     let editingExpense = $state<any>(null);
@@ -172,20 +174,26 @@
 
     <!-- Alert for credentials -->
     {#if !store.state.trenitaliaUser}
-        <div class="bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 px-6 py-4 rounded-[24px] flex items-center justify-between">
-            <div class="flex items-center gap-3">
+        <Alert variant="warning">
+            {#snippet children()}
                 <Settings size={20} />
-                <span class="font-medium">Configura Trenitalia per scaricare i viaggi.</span>
-            </div>
-            <a href="/impostazioni" class="bg-amber-200 dark:bg-amber-800/60 px-5 py-2 rounded-full text-sm font-semibold hover:brightness-110 transition-all duration-200">Vai a Impostazioni</a>
-        </div>
+                <span>Configura Trenitalia per scaricare i viaggi.</span>
+            {/snippet}
+            {#snippet action()}
+                <a href="/impostazioni" class="bg-amber-200 dark:bg-amber-800/60 px-5 py-2 rounded-full text-sm font-semibold hover:brightness-110 transition-all duration-200">
+                    Vai a Impostazioni
+                </a>
+            {/snippet}
+        </Alert>
     {/if}
 
     {#if syncStatus}
-        <div class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200 px-6 py-4 rounded-[24px] font-medium flex items-center gap-3">
-            <RefreshCw size={20} class="animate-spin" />
-            {syncStatus}
-        </div>
+        <Alert variant="info">
+            {#snippet children()}
+                <RefreshCw size={20} class="animate-spin" />
+                <span>{syncStatus}</span>
+            {/snippet}
+        </Alert>
     {/if}
 
     <div class="bg-white dark:bg-[#1e1e24] rounded-[32px] overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800/50">
@@ -213,9 +221,9 @@
                             {/if}
                         </td>
                         <td class="p-5 hidden md:table-cell">
-                            <span class="bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400">
+                            <Badge variant="info" size="sm">
                                 {expense.category || 'Generico'}
-                            </span>
+                            </Badge>
                         </td>
                         <td class="p-5 text-right font-medium text-slate-900 dark:text-white">
                             € {expense.amount.toFixed(2)}

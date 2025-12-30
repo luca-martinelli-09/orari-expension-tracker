@@ -1,19 +1,26 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
+    type Variant = 'default' | 'filled';
 
-    let { 
-        value = $bindable(), 
-        id, 
-        label, 
-        options = [], 
-        class: className = '' 
-    } = $props<{ 
-        value: any, 
-        id?: string, 
-        label?: string, 
-        options: string[], 
-        class?: string 
+    let {
+        value = $bindable(),
+        id,
+        label,
+        options = [],
+        variant = 'default',
+        class: className = ''
+    } = $props<{
+        value: any,
+        id?: string,
+        label?: string,
+        options: string[],
+        variant?: Variant,
+        class?: string
     }>();
+
+    const variantClasses = {
+        default: 'bg-slate-50 dark:bg-[#25252b]',
+        filled: 'bg-white dark:bg-slate-800'
+    };
 </script>
 
 <div class="{className} space-y-1">
@@ -23,10 +30,10 @@
         </label>
     {/if}
     <div class="relative">
-        <select 
-            {id} 
-            bind:value 
-            class="w-full rounded-2xl border-none bg-slate-50 dark:bg-[#25252b] text-slate-900 dark:text-white shadow-sm focus:ring-2 focus:ring-indigo-500 p-4 appearance-none transition-all cursor-pointer"
+        <select
+            {id}
+            bind:value
+            class="w-full rounded-2xl border-none {variantClasses[variant]} text-slate-900 dark:text-white shadow-sm focus:ring-2 focus:ring-indigo-500 p-4 appearance-none transition-all cursor-pointer"
         >
             {#each options as opt}
                 <option value={opt}>{opt}</option>

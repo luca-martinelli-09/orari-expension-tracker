@@ -7,6 +7,7 @@
     import { Download, Paperclip, Clock } from 'lucide-svelte';
     import { generateHoursPdf } from '$lib/pdf';
     import DayEditor from '$lib/components/DayEditor.svelte';
+    import Badge from '$lib/components/ui/Badge.svelte';
 
     let selectedDay = $state<string | null>(null);
 
@@ -105,18 +106,18 @@
                     <!-- Content Body -->
                     <div class="flex flex-col gap-1.5 mt-2">
                         {#if holiday}
-                            <div class="bg-rose-100/80 dark:bg-rose-900/30 text-rose-700 dark:text-rose-200 text-[10px] font-bold px-2.5 py-1 rounded-full truncate text-center uppercase tracking-wide">
+                            <Badge variant="danger" size="sm" class="justify-center truncate">
                                 {holiday}
-                            </div>
+                            </Badge>
                         {:else if dayData.type !== 'Lavoro'}
-                            <div class="bg-indigo-100/80 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-200 text-[10px] font-bold px-2.5 py-1 rounded-full truncate text-center uppercase tracking-wide">
+                            <Badge variant="primary" size="sm" class="justify-center truncate">
                                 {dayData.type}
-                            </div>
+                            </Badge>
                         {:else if hours > 0}
-                            <div class="bg-emerald-100/80 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200 text-[11px] font-bold px-2 py-1 rounded-lg text-center flex items-center justify-center gap-1.5">
+                            <Badge variant="success" size="md" class="justify-center">
                                 <Clock size={12} strokeWidth={2.5} />
                                 {formatDuration(hours)}
-                            </div>
+                            </Badge>
                         {:else}
                              <!-- Spacer for alignment or empty state indicator if needed -->
                              <div class="h-6"></div>
