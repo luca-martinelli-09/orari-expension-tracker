@@ -45,7 +45,7 @@
 			for="attachment-upload"
 			class="cursor-pointer bg-md-primary text-md-on-primary hover:opacity-80 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all inline-flex items-center gap-2 border-2 border-md-primary"
 		>
-			<Upload size={14} strokeWidth={3} />
+			<Upload size={16} strokeWidth={2.5} />
 			<span>Upload</span>
 			<input
 				id="attachment-upload"
@@ -66,7 +66,7 @@
 				>
 					<div class="flex items-center gap-3 overflow-hidden">
 						<div class="text-md-on-surface">
-							<FileText size={18} strokeWidth={2.5} />
+							<FileText size={20} strokeWidth={2} />
 						</div>
 						<span
 							class="truncate max-w-[160px] text-xs font-black uppercase tracking-tight text-md-on-surface"
@@ -79,14 +79,14 @@
 							onclick={() => openPreview(file.data)}
 							class="!p-2 !border-none text-[10px] font-black uppercase tracking-widest text-md-on-surface/60 hover:text-md-on-surface"
 						>
-							<Eye size={14} class="mr-1" /> Preview
+							<Eye size={16} class="mr-1" /> Preview
 						</Button>
 						<Button
 							variant="icon"
 							onclick={() => removeAttachment(file.id)}
 							class="!p-2 hover:text-md-on-surface text-md-on-surface/30 border-none"
 						>
-							<Trash2 size={18} strokeWidth={2.5} />
+							<Trash2 size={20} strokeWidth={2} />
 						</Button>
 					</div>
 				</li>

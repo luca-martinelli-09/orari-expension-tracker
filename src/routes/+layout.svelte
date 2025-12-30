@@ -87,7 +87,7 @@
 				</div>
 
 				<div
-					class="flex items-center gap-1 md:gap-2 bg-md-surface-variant p-1 rounded-full border border-md-outline/10 w-full md:w-auto overflow-x-auto no-scrollbar justify-center md:justify-start"
+					class="flex items-center gap-1 md:gap-2 bg-md-surface-variant p-1 rounded-full border border-md-outline/10 w-auto overflow-x-auto no-scrollbar justify-center md:justify-start"
 				>
 					{#each navItems as item}
 						<a

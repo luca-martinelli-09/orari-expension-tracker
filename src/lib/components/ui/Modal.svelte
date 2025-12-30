@@ -23,12 +23,11 @@
 
 <Dialog.Root bind:open onOpenChange={handleOpenChange}>
 	<Dialog.Portal>
-		<div transition:fade={{ duration: 200 }}>
+		<div transition:fade={{ duration: 150 }}>
 			<Dialog.Overlay class="fixed inset-0 z-50 bg-md-on-surface/40 backdrop-blur-md" />
 		</div>
 		<div
-			class="fixed left-[50%] top-[50%] z-50 w-full max-w-2xl translate-x-[-50%] translate-y-[-50%] focus:outline-none"
-			transition:fly={{ y: 20, duration: 300 }}
+			class="fixed left-[50%] top-[50%] z-50 w-full max-w-2xl translate-x-[-50%] translate-y-[-50%] focus:outline-none animate-in fade-in zoom-in-95 duration-300 ease-out"
 		>
 			<Dialog.Content class="bg-md-background border-2 border-md-on-surface p-0 shadow-2xl">
 				<!-- Header -->
@@ -48,7 +47,7 @@
 					<Dialog.Close
 						class="p-2 rounded-full hover:bg-md-surface-variant text-md-on-surface transition-colors border-none"
 					>
-						<X size={20} strokeWidth={3} />
+						<X size={22} strokeWidth={2.5} />
 					</Dialog.Close>
 				</div>
 

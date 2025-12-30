@@ -71,7 +71,7 @@
 				<div
 					class="flex items-center gap-3 text-md-on-surface border-b-2 border-md-on-surface/5 pb-4"
 				>
-					<Clock size={20} strokeWidth={3} />
+					<Clock size={22} strokeWidth={2.5} />
 					<span class="text-xs font-black uppercase tracking-[0.2em]">Orari Sessione</span>
 				</div>
 

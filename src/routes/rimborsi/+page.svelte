@@ -280,7 +280,7 @@
 						</TableCell>
 						<TableCell align="right">
 							<div
-								class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all"
+								class="flex items-center justify-end gap-1 md:opacity-0 group-hover:opacity-100 transition-all"
 							>
 								<Button
 									variant="icon"
