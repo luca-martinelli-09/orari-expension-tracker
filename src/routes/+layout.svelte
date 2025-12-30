@@ -41,7 +41,7 @@
 	class="{store.state.theme} min-h-screen transition-colors duration-300 font-['Inter',sans-serif]"
 >
 	<div
-		class="min-h-screen bg-md-background text-md-onBackground flex flex-col transition-colors duration-300"
+		class="min-h-screen bg-md-background text-md-on-background flex flex-col transition-colors duration-300"
 	>
 		<nav
 			class="bg-md-background/80 backdrop-blur-md sticky top-0 z-40 px-6 py-6 transition-colors duration-300"
@@ -51,37 +51,37 @@
 			>
 				<div class="flex items-center gap-8 w-full md:w-auto justify-between md:justify-start">
 					<div class="flex items-center gap-3">
-						<div class="bg-md-primary text-md-onPrimary p-2.5 rounded-full">
+						<div class="bg-md-primary text-md-on-primary p-2.5 rounded-full">
 							<Calendar size={22} />
 						</div>
 						<h1 class="text-xl font-bold tracking-tighter uppercase hidden sm:block">Journal</h1>
 					</div>
 
 					<div
-						class="flex items-center bg-md-surfaceVariant rounded-full border border-md-outline/20 p-1"
+						class="flex items-center bg-md-surface-variant rounded-full border border-md-outline/20 p-1"
 					>
-						<Button variant="icon" onclick={prevMonth} class="!p-1.5">
+						<Button variant="icon" onclick={prevMonth} class="!p-1.5 border-none">
 							<ChevronLeft size={18} />
 						</Button>
 						<span class="text-xs font-bold uppercase tracking-widest min-w-[140px] text-center">
 							{format(currentDate, 'MMMM yyyy', { locale: it })}
 						</span>
-						<Button variant="icon" onclick={nextMonth} class="!p-1.5">
+						<Button variant="icon" onclick={nextMonth} class="!p-1.5 border-none">
 							<ChevronRight size={18} />
 						</Button>
 					</div>
 				</div>
 
 				<div
-					class="flex items-center gap-2 bg-md-surfaceVariant p-1 rounded-full border border-md-outline/10"
+					class="flex items-center gap-2 bg-md-surface-variant p-1 rounded-full border border-md-outline/10"
 				>
 					{#each navItems as item}
 						<a
 							href={item.href}
-							class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-200
+							class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer
                             {$page.url.pathname === item.href
-								? 'bg-md-primary text-md-onPrimary'
-								: 'text-md-onSurfaceVariant hover:bg-md-outline/10'}"
+								? 'bg-md-primary text-md-on-primary'
+								: 'text-md-on-surface-variant hover:bg-md-on-surface hover:text-md-background'}"
 						>
 							{item.label}
 						</a>

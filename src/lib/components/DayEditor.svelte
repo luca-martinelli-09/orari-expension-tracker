@@ -66,10 +66,10 @@
 		{#if day.type === 'Lavoro'}
 			<div
 				transition:slide
-				class="space-y-6 border-2 border-md-onSurface p-6 bg-md-surface-variant/5"
+				class="space-y-6 border-2 border-md-on-surface p-6 bg-md-surface-variant/5"
 			>
 				<div
-					class="flex items-center gap-3 text-md-onSurface border-b-2 border-md-onSurface/5 pb-4"
+					class="flex items-center gap-3 text-md-on-surface border-b-2 border-md-on-surface/5 pb-4"
 				>
 					<Clock size={20} strokeWidth={3} />
 					<span class="text-xs font-black uppercase tracking-[0.2em]">Orari Sessione</span>

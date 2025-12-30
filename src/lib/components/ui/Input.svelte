@@ -24,7 +24,7 @@
 	{#if label}
 		<Label.Root
 			for={id}
-			class="block text-[10px] font-black uppercase tracking-[0.2em] text-md-onSurface/40 ml-1"
+			class="block text-[10px] font-black uppercase tracking-[0.2em] text-md-on-surface/40 ml-1"
 		>
 			{label}
 		</Label.Root>
@@ -35,6 +35,6 @@
 		{step}
 		bind:value
 		{placeholder}
-		class="w-full rounded-none border-2 border-md-onSurface bg-md-background text-md-onSurface shadow-sm focus:ring-4 focus:ring-md-onSurface/10 p-4 transition-all placeholder:text-md-onSurface/20 font-bold uppercase tracking-widest text-sm"
+		class="w-full rounded-none border-2 border-md-on-surface bg-md-background text-md-on-surface shadow-sm focus:ring-4 focus:ring-md-on-surface/10 p-4 transition-all placeholder:text-md-on-surface/20 font-bold uppercase tracking-widest text-sm"
 	/>
 </div>

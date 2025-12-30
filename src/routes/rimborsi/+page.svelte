@@ -1,15 +1,15 @@
 <script lang="ts">
+	import { store } from '$lib/store.svelte';
+	import { format } from 'date-fns';
 	import ExpenseEditor from '$lib/components/ExpenseEditor.svelte';
+	import { generateExpensesPdf } from '$lib/pdf';
+	import { Download, Plus, RefreshCw, Trash2, Settings, CreditCard, Pencil } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import Table from '$lib/components/ui/table/Table.svelte';
-	import TableCell from '$lib/components/ui/table/TableCell.svelte';
 	import TableHead from '$lib/components/ui/table/TableHead.svelte';
 	import TableRow from '$lib/components/ui/table/TableRow.svelte';
-	import { generateExpensesPdf } from '$lib/pdf';
-	import { store } from '$lib/store.svelte';
-	import { format } from 'date-fns';
-	import { CreditCard, Download, Pencil, Plus, RefreshCw, Settings, Trash2 } from 'lucide-svelte';
+	import TableCell from '$lib/components/ui/table/TableCell.svelte';
 
 	let showEditor = $state(false);
 	let editingExpense = $state<any>(null);
@@ -145,7 +145,7 @@
 			}
 
 			syncStatus = 'COMPLETATO';
-		} catch (e) {
+		} catch (e: any) {
 			console.error(e);
 			syncStatus = 'ERRORE';
 		} finally {
@@ -174,32 +174,32 @@
 <div class="flex flex-col gap-8">
 	<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 		<div>
-			<h2 class="text-5xl font-black text-md-onSurface tracking-tighter uppercase">Rimborsi</h2>
-			<p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-onSurfaceVariant/60 mt-1">
+			<h2 class="text-5xl font-black text-md-on-surface tracking-tighter uppercase">Rimborsi</h2>
+			<p
+				class="text-[10px] font-black uppercase tracking-[0.3em] text-md-on-surface-variant/60 mt-1"
+			>
 				Gestione Spese & Viaggi
 			</p>
 		</div>
 		<div class="flex flex-wrap gap-3">
 			<Button variant="primary" onclick={openNew}>
 				<Plus size={20} strokeWidth={3} />
-				<span class="uppercase tracking-widest text-xs font-bold">Aggiungi</span>
+				<span>Aggiungi</span>
 			</Button>
 			<Button variant="secondary" onclick={syncTrenitalia} disabled={loading}>
 				<RefreshCw size={20} class={loading ? 'animate-spin' : ''} strokeWidth={3} />
-				<span class="uppercase tracking-widest text-xs font-bold"
-					>{loading ? syncStatus : 'Sync Trenitalia'}</span
-				>
+				<span>{loading ? syncStatus : 'Sync Trenitalia'}</span>
 			</Button>
 			<Button variant="secondary" onclick={exportPdf}>
 				<Download size={20} strokeWidth={3} />
-				<span class="uppercase tracking-widest text-xs font-bold">Esporta PDF</span>
+				<span>Esporta PDF</span>
 			</Button>
 		</div>
 	</div>
 
 	{#if !store.state.trenitaliaUser}
 		<div
-			class="border-2 border-md-onSurface p-6 flex items-center justify-between animate-in fade-in duration-300"
+			class="border-2 border-md-on-surface p-6 flex items-center justify-between animate-in fade-in duration-300"
 		>
 			<div class="flex items-center gap-3">
 				<Settings size={20} strokeWidth={3} />
@@ -209,13 +209,13 @@
 			</div>
 			<a
 				href="/impostazioni"
-				class="text-[10px] font-black underline uppercase tracking-widest hover:bg-md-onSurface hover:text-md-surface px-4 py-2 transition-all"
+				class="text-[10px] font-black underline uppercase tracking-widest hover:bg-md-on-surface hover:text-md-surface px-4 py-2 transition-all"
 				>Vai alle Impostazioni</a
 			>
 		</div>
 	{/if}
 
-	<Card class="border-2 border-md-onSurface shadow-none rounded-none overflow-hidden">
+	<Card class="border-2 border-md-on-surface shadow-none rounded-none overflow-hidden">
 		<Table>
 			<TableHead>
 				<TableRow>
@@ -224,7 +224,7 @@
 						>Descrizione</TableCell
 					>
 					<th
-						class="p-5 font-black text-md-onSurfaceVariant text-[10px] uppercase tracking-widest hidden md:table-cell"
+						class="p-5 font-black text-md-on-surface-variant text-[10px] uppercase tracking-widest hidden md:table-cell"
 						>Categoria</th
 					>
 					<TableCell head align="right" class="uppercase tracking-widest text-[10px] font-black"
@@ -233,7 +233,7 @@
 					<TableCell head align="right"></TableCell>
 				</TableRow>
 			</TableHead>
-			<tbody class="divide-y divide-md-onSurface/10">
+			<tbody class="divide-y divide-md-on-surface/10">
 				{#each sortedExpenses as expense}
 					<TableRow>
 						<TableCell class="text-xs font-bold uppercase tracking-tight"
@@ -243,15 +243,15 @@
 							<div class="font-black text-sm uppercase tracking-tight">{expense.description}</div>
 							{#if expense.attachments.length}
 								<div
-									class="flex items-center gap-1 mt-1 text-[9px] font-black uppercase border-2 border-md-onSurface w-fit px-2 py-0.5 rounded-none"
+									class="flex items-center gap-1 mt-1 text-[9px] font-black uppercase border-2 border-md-on-surface w-fit px-2 py-0.5 rounded-none opacity-60"
 								>
-									{expense.attachments.length} DOCUMENTI
+									{expense.attachments.length} DOCS
 								</div>
 							{/if}
 						</TableCell>
 						<td class="p-5 hidden md:table-cell">
 							<span
-								class="text-[9px] font-black uppercase border-2 border-md-onSurface px-3 py-1 rounded-none"
+								class="text-[9px] font-black uppercase border border-md-on-surface/20 px-3 py-1 rounded-none opacity-60"
 							>
 								{expense.category || 'GENERICO'}
 							</span>
@@ -260,18 +260,20 @@
 							€ {expense.amount.toFixed(2)}
 						</TableCell>
 						<TableCell align="right">
-							<div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100">
+							<div
+								class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all"
+							>
 								<Button
 									variant="icon"
 									onclick={() => edit(expense)}
-									class="!p-1 hover:border-current border border-transparent"
+									class="!p-1 hover:border-md-on-surface/20 border border-transparent"
 								>
 									<Pencil size={16} strokeWidth={3} />
 								</Button>
 								<Button
 									variant="icon"
 									onclick={() => remove(expense.id)}
-									class="!p-1 hover:border-current border border-transparent text-md-error"
+									class="!p-1 hover:border-md-on-surface/20 border border-transparent text-md-error"
 								>
 									<Trash2 size={16} strokeWidth={3} />
 								</Button>
@@ -293,7 +295,7 @@
 		</Table>
 
 		<div
-			class="bg-md-onSurface text-md-surface p-8 flex justify-between items-center transition-colors"
+			class="bg-md-primary text-md-on-primary p-8 flex justify-between items-center transition-colors border-t-2 border-md-primary"
 		>
 			<span class="text-xs font-black uppercase tracking-[0.4em]">Totale Mensile</span>
 			<span class="text-5xl font-black tracking-tighter">€ {total.toFixed(2)}</span>

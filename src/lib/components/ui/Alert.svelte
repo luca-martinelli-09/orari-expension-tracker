@@ -26,10 +26,10 @@
 	}
 
 	const variantClasses: Record<Variant, string> = {
-		info: 'bg-md-surface-variant border-md-onSurface/10 text-md-onSurface',
-		warning: 'bg-md-onSurface/5 border-md-onSurface/20 text-md-onSurface',
-		success: 'bg-md-primary text-md-onPrimary border-md-primary',
-		error: 'border-2 border-md-onSurface bg-md-background text-md-onSurface'
+		info: 'bg-md-surface-variant border-md-on-surface/10 text-md-on-surface',
+		warning: 'bg-md-on-surface/5 border-md-on-surface/20 text-md-on-surface',
+		success: 'bg-md-primary text-md-on-primary border-md-primary',
+		error: 'border-2 border-md-on-surface bg-md-background text-md-on-surface'
 	};
 </script>
 

@@ -9,7 +9,7 @@
 </script>
 
 <tr
-	class="hover:bg-md-onSurface/5 transition-colors group {onclick
+	class="hover:bg-md-on-surface/5 transition-colors group {onclick
 		? 'cursor-pointer'
 		: ''} {className}"
 	{onclick}

@@ -38,17 +38,15 @@
 
 <div class="space-y-4">
 	<div class="flex justify-between items-center px-1">
-		<span class="text-[10px] font-black uppercase tracking-[0.2em] text-md-onSurface/40"
+		<span class="text-[10px] font-black uppercase tracking-[0.2em] text-md-on-surface/40"
 			>{label}</span
 		>
 		<label
 			for="attachment-upload"
-			class="cursor-pointer bg-md-onSurface text-md-surface hover:brightness-110 px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all"
+			class="cursor-pointer bg-md-primary text-md-on-primary hover:opacity-80 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all inline-flex items-center gap-2 border-2 border-md-primary"
 		>
-			<div class="flex items-center gap-2">
-				<Upload size={14} strokeWidth={3} />
-				<span>Carica</span>
-			</div>
+			<Upload size={14} strokeWidth={3} />
+			<span>Upload</span>
 			<input
 				id="attachment-upload"
 				type="file"
@@ -64,14 +62,14 @@
 		<ul class="space-y-2">
 			{#each attachments as file}
 				<li
-					class="flex items-center justify-between border-2 border-md-onSurface p-3 group transition-all bg-md-background"
+					class="flex items-center justify-between border-2 border-md-on-surface p-3 group transition-all bg-md-background"
 				>
 					<div class="flex items-center gap-3 overflow-hidden">
-						<div class="text-md-onSurface">
+						<div class="text-md-on-surface">
 							<FileText size={18} strokeWidth={2.5} />
 						</div>
 						<span
-							class="truncate max-w-[160px] text-xs font-black uppercase tracking-tight text-md-onSurface"
+							class="truncate max-w-[160px] text-xs font-black uppercase tracking-tight text-md-on-surface"
 							>{file.name}</span
 						>
 					</div>
@@ -79,14 +77,14 @@
 						<Button
 							variant="ghost"
 							onclick={() => openPreview(file.data)}
-							class="!p-2 !border-none text-[10px] font-black uppercase tracking-widest text-md-onSurface/60 hover:text-md-onSurface"
+							class="!p-2 !border-none text-[10px] font-black uppercase tracking-widest text-md-on-surface/60 hover:text-md-on-surface"
 						>
-							<Eye size={14} class="mr-1" /> Anteprima
+							<Eye size={14} class="mr-1" /> Preview
 						</Button>
 						<Button
 							variant="icon"
 							onclick={() => removeAttachment(file.id)}
-							class="!p-2 hover:text-md-onSurface text-md-onSurface/30 border-none"
+							class="!p-2 hover:text-md-on-surface text-md-on-surface/30 border-none"
 						>
 							<Trash2 size={18} strokeWidth={2.5} />
 						</Button>
@@ -96,7 +94,7 @@
 		</ul>
 	{:else}
 		<div
-			class="text-[10px] font-black uppercase tracking-[0.2em] text-md-onSurface/20 text-center py-8 border-2 border-dashed border-md-onSurface/10"
+			class="text-[10px] font-black uppercase tracking-[0.2em] text-md-on-surface/20 text-center py-8 border-2 border-dashed border-md-on-surface/10"
 		>
 			Trascina o incolla file qui
 		</div>

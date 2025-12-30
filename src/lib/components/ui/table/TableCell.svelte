@@ -24,7 +24,7 @@
 
 {#if head}
 	<th
-		class="p-5 font-semibold text-md-onSurfaceVariant text-sm {alignmentClasses[
+		class="p-5 font-semibold text-md-on-surface-variant text-sm {alignmentClasses[
 			align as 'left' | 'center' | 'right'
 		]} {className}"
 	>
@@ -34,7 +34,7 @@
 	<td
 		class="p-5 text-sm {alignmentClasses[align as 'left' | 'center' | 'right']} {bold
 			? 'font-bold'
-			: 'font-medium'} text-md-onSurface {className}"
+			: 'font-medium'} text-md-on-surface {className}"
 	>
 		{@render children?.()}
 	</td>

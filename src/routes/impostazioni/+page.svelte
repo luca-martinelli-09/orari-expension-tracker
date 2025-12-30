@@ -17,8 +17,8 @@
 
 <div class="max-w-2xl mx-auto flex flex-col gap-12">
 	<div class="flex flex-col gap-2">
-		<h2 class="text-5xl font-black text-md-onSurface tracking-tighter uppercase">Impostazioni</h2>
-		<p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-onSurfaceVariant/60">
+		<h2 class="text-5xl font-black text-md-on-surface tracking-tighter uppercase">Impostazioni</h2>
+		<p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-on-surface-variant/60">
 			Configurazione Profilo & Credenziali
 		</p>
 	</div>
@@ -26,18 +26,18 @@
 	<div class="space-y-12">
 		<!-- User Profile Section -->
 		<section class="space-y-6">
-			<div class="flex items-center gap-4 border-b-2 border-md-onSurface/5 pb-4">
-				<div class="bg-md-onSurface text-md-surface p-2 rounded-full">
+			<div class="flex items-center gap-4 border-b-2 border-md-on-surface/5 pb-4">
+				<div class="bg-md-on-surface text-md-surface p-2 rounded-full">
 					<User size={20} strokeWidth={3} />
 				</div>
-				<h3 class="text-xl font-black uppercase tracking-tight text-md-onSurface">
+				<h3 class="text-xl font-black uppercase tracking-tight text-md-on-surface">
 					Profilo Utente
 				</h3>
 			</div>
 
 			<Card class="p-8">
 				<Input label="Nome e Cognome" placeholder="Mario Rossi" bind:value={store.state.userName} />
-				<p class="text-[9px] font-bold uppercase tracking-widest text-md-onSurface/40 mt-4 ml-1">
+				<p class="text-[9px] font-bold uppercase tracking-widest text-md-on-surface/40 mt-4 ml-1">
 					* Apparirà nell'intestazione e nelle firme dei PDF.
 				</p>
 			</Card>
@@ -45,11 +45,11 @@
 
 		<!-- Trenitalia Credentials Section -->
 		<section class="space-y-6">
-			<div class="flex items-center gap-4 border-b-2 border-md-onSurface/5 pb-4">
-				<div class="bg-md-onSurface text-md-surface p-2 rounded-full">
+			<div class="flex items-center gap-4 border-b-2 border-md-on-surface/5 pb-4">
+				<div class="bg-md-on-surface text-md-surface p-2 rounded-full">
 					<Lock size={20} strokeWidth={3} />
 				</div>
-				<h3 class="text-xl font-black uppercase tracking-tight text-md-onSurface">Trenitalia</h3>
+				<h3 class="text-xl font-black uppercase tracking-tight text-md-on-surface">Trenitalia</h3>
 			</div>
 
 			<Card class="p-8 space-y-6">
@@ -68,7 +68,7 @@
 				</div>
 
 				<div
-					class="p-4 border-2 border-md-onSurface/10 bg-md-surfaceVariant/5 text-[10px] font-bold uppercase tracking-widest text-md-onSurface/60 leading-relaxed"
+					class="p-4 border-2 border-md-on-surface/10 bg-md-surface-variant/5 text-[10px] font-bold uppercase tracking-widest text-md-on-surface/60 leading-relaxed"
 				>
 					Le credenziali sono salvate localmente (IndexedDB). Non vengono mai trasmesse a terzi.
 				</div>
@@ -77,10 +77,10 @@
 	</div>
 
 	<!-- Action Bar -->
-	<div class="flex items-center justify-end gap-6 pt-4 border-t-2 border-md-onSurface/5">
+	<div class="flex items-center justify-end gap-6 pt-4 border-t-2 border-md-on-surface/5">
 		{#if saved}
 			<div
-				class="flex items-center gap-2 text-md-onSurface text-xs font-black uppercase tracking-widest animate-in fade-in slide-in-from-right-4 duration-300"
+				class="flex items-center gap-2 text-md-on-surface text-xs font-black uppercase tracking-widest animate-in fade-in slide-in-from-right-4 duration-300"
 			>
 				<CheckCircle2 size={16} strokeWidth={3} />
 				<span>Salvato</span>

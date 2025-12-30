@@ -23,18 +23,17 @@
 	}>();
 
 	const baseClasses =
-		'font-semibold transition-all duration-200 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-2 border-2';
+		'font-black uppercase tracking-widest text-[10px] transition-all duration-200 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-2 border-2 rounded-full cursor-pointer';
 
 	const variants: Record<Variant, string> = {
-		primary:
-			'bg-md-primary text-md-onPrimary border-md-primary hover:bg-transparent hover:text-md-primary rounded-full px-6 py-2.5',
+		primary: 'bg-md-primary text-md-on-primary border-md-primary hover:brightness-125 px-6 py-3',
 		secondary:
-			'bg-transparent text-md-onSurface border-md-outline hover:bg-md-onSurface hover:text-md-surface rounded-full px-6 py-2.5',
+			'bg-md-surface-variant text-md-on-surface border-md-outline hover:bg-md-on-surface hover:text-md-surface px-6 py-3',
 		danger:
-			'bg-transparent text-md-onSurface border-md-onSurface hover:bg-md-onSurface hover:text-md-surface rounded-full px-6 py-2.5',
+			'bg-transparent text-md-on-surface border-md-on-surface hover:bg-md-on-surface hover:text-md-surface px-6 py-3',
 		ghost:
-			'bg-transparent text-md-onSurface border-transparent hover:bg-md-surfaceVariant rounded-full px-4 py-2',
-		icon: 'p-2 rounded-full border-transparent hover:bg-md-surfaceVariant text-md-onSurface'
+			'bg-transparent text-md-on-surface border-transparent hover:bg-md-on-surface/10 px-4 py-2',
+		icon: 'p-2 rounded-full border-transparent hover:bg-md-on-surface/10 text-md-on-surface'
 	};
 </script>
 

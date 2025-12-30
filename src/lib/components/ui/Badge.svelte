@@ -17,12 +17,12 @@
 	}>();
 
 	const variantClasses: Record<Variant, string> = {
-		primary: 'bg-md-primary text-md-onPrimary border-md-primary',
-		success: 'bg-md-onSurface text-md-surface border-md-onSurface',
-		danger: 'border-2 border-md-onSurface text-md-onSurface',
-		warning: 'bg-md-onSurface/10 text-md-onSurface border-md-onSurface/20',
-		info: 'bg-md-surface-variant text-md-onSurface border-md-onSurface/10',
-		default: 'border border-md-onSurface/30 text-md-onSurface/60'
+		primary: 'bg-md-primary text-md-on-primary border-md-primary',
+		success: 'bg-md-on-surface text-md-surface border-md-on-surface',
+		danger: 'border-2 border-md-on-surface text-md-on-surface',
+		warning: 'bg-md-on-surface/10 text-md-on-surface border-md-on-surface/20',
+		info: 'bg-md-surface-variant text-md-on-surface border-md-on-surface/10',
+		default: 'border border-md-on-surface/30 text-md-on-surface/60'
 	};
 
 	const sizeClasses: Record<Size, string> = {

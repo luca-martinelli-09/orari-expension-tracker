@@ -95,12 +95,12 @@
 		<div class="grid grid-cols-2 gap-6">
 			<div class="space-y-2">
 				<label
-					class="block text-[10px] font-black uppercase tracking-[0.2em] text-md-onSurface/40 ml-1"
+					class="block text-[10px] font-black uppercase tracking-[0.2em] text-md-on-surface/40 ml-1"
 					for="amount">Importo</label
 				>
 				<div class="relative">
 					<span
-						class="absolute left-4 top-1/2 -translate-y-1/2 text-md-onSurfaceVariant font-black text-sm"
+						class="absolute left-4 top-1/2 -translate-y-1/2 text-md-on-surface-variant font-black text-sm"
 						>€</span
 					>
 					<input
@@ -108,7 +108,7 @@
 						type="number"
 						step="0.01"
 						bind:value={currentExpense.amount}
-						class="w-full border-2 border-md-onSurface bg-md-background text-md-onSurface shadow-sm focus:ring-4 focus:ring-md-onSurface/10 p-4 pl-10 transition-all font-black uppercase tracking-widest text-sm"
+						class="w-full border-2 border-md-on-surface bg-md-background text-md-on-surface shadow-sm focus:ring-4 focus:ring-md-on-surface/10 p-4 pl-10 transition-all font-black uppercase tracking-widest text-sm"
 					/>
 				</div>
 			</div>

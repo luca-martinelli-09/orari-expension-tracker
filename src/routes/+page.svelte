@@ -66,23 +66,25 @@
 <div class="flex flex-col gap-8">
 	<div class="flex items-center justify-between">
 		<div>
-			<h2 class="text-5xl font-black text-md-onSurface tracking-tighter uppercase">Calendario</h2>
-			<p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-onSurfaceVariant/60 mt-1">
+			<h2 class="text-5xl font-black text-md-on-surface tracking-tighter uppercase">Calendario</h2>
+			<p
+				class="text-[10px] font-black uppercase tracking-[0.3em] text-md-on-surface-variant/60 mt-1"
+			>
 				Registrazione Ore & Permessi
 			</p>
 		</div>
 
 		<Button variant="primary" onclick={exportPdf}>
 			<Download size={20} strokeWidth={3} />
-			<span class="uppercase tracking-widest text-xs font-bold">Esporta PDF</span>
+			<span>Esporta PDF</span>
 		</Button>
 	</div>
 
-	<Card class="p-8 border-2 border-md-onSurface shadow-none rounded-none">
-		<div class="grid grid-cols-7 mb-8 border-b-2 border-md-onSurface/5">
+	<Card class="p-8 border-md-on-surface shadow-none rounded-none transition-colors duration-300">
+		<div class="grid grid-cols-7 mb-8 border-b-2 border-md-on-surface/5">
 			{#each ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'] as day}
 				<div
-					class="text-center text-[10px] font-black text-md-onSurfaceVariant py-4 tracking-[0.2em]"
+					class="text-center text-[10px] font-black text-md-on-surface-variant py-4 tracking-[0.2em]"
 				>
 					{day}
 				</div>
@@ -101,28 +103,31 @@
 
 				<button
 					onclick={() => handleDayClick(date)}
-					class="relative p-4 text-left transition-all duration-300 group flex flex-col justify-between aspect-square border-2
+					class="relative p-4 text-left transition-all duration-200 group flex flex-col justify-between aspect-square border-2 cursor-pointer
                     {!isCurrentMonth
-						? 'opacity-20 grayscale border-md-onSurface/5'
-						: 'hover:bg-md-onSurface hover:text-md-surface border-md-onSurface/10'}
+						? 'opacity-20 grayscale border-md-on-surface/5'
+						: 'hover:bg-md-on-surface/10 border-md-on-surface/10'}
                     {selectedDay === format(date, 'yyyy-MM-dd')
-						? 'bg-md-onSurface text-md-surface z-10 scale-105 shadow-2xl border-md-onSurface'
+						? 'border-md-on-surface bg-md-on-surface/10 ring-4 ring-md-on-surface/5'
 						: isNonWork && isCurrentMonth
-							? 'bg-md-onSurface/5'
+							? 'bg-md-on-surface/5'
 							: 'bg-md-background'}
-                    {isToday && isCurrentMonth ? 'ring-2 ring-inset ring-md-onSurface' : ''}
                     "
 				>
 					<div class="flex justify-between items-start w-full">
 						<span
 							class="text-2xl font-black tracking-tighter {isToday
 								? 'underline underline-offset-4 decoration-4'
-								: ''}"
+								: selectedDay === format(date, 'yyyy-MM-dd')
+									? 'text-md-on-surface'
+									: isNonWork
+										? 'text-md-on-surface-variant'
+										: 'text-md-on-surface'}"
 						>
 							{format(date, 'd')}
 						</span>
 						{#if dayData.attachments.length > 0}
-							<div class="border border-current rounded-full p-1">
+							<div class="border border-current rounded-full p-1 opacity-50">
 								<Paperclip size={10} strokeWidth={3} />
 							</div>
 						{/if}
@@ -130,14 +135,12 @@
 
 					<div class="flex flex-col gap-1 mt-2">
 						{#if holiday}
-							<div
-								class="text-[9px] font-black uppercase tracking-tight truncate border-t border-current pt-1 italic"
-							>
+							<div class="text-[9px] font-black uppercase tracking-tight truncate opacity-60">
 								{holiday}
 							</div>
 						{:else if dayData.type !== 'Lavoro'}
 							<div
-								class="text-[9px] font-black uppercase tracking-tight truncate border-t border-current pt-1"
+								class="text-[9px] font-black uppercase tracking-tight truncate border-t border-md-on-surface/10 pt-1 opacity-60"
 							>
 								{dayData.type}
 							</div>

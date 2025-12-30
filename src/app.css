@@ -1,62 +1,67 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-	:root {
-		/* Monochrome Palette using OKLCH principles for contrast */
-		--md-sys-color-background: oklch(1 0 0); /* Pure White */
-		--md-sys-color-on-background: oklch(0 0 0); /* Pure Black */
+@theme {
+	/* Monochrome Palette - Avoid absolute 0% or 100% to allow brightness filters */
+	--color-md-background: oklch(0.99 0 0);
+	--color-md-on-background: oklch(0.15 0 0); /* Very Dark Gray instead of pure black */
 
-		--md-sys-color-surface: oklch(1 0 0);
-		--md-sys-color-surface-container: oklch(0.97 0 0); /* Very Light Gray */
-		--md-sys-color-surface-variant: oklch(0.92 0 0);
-		--md-sys-color-on-surface: oklch(0 0 0);
-		--md-sys-color-on-surface-variant: oklch(0.3 0 0); /* Medium-Dark Gray text */
+	--color-md-surface: oklch(1 0 0);
+	--color-md-surface-container: oklch(0.96 0 0);
+	--color-md-surface-variant: oklch(0.9 0 0);
+	--color-md-on-surface: oklch(0.15 0 0);
+	--color-md-on-surface-variant: oklch(0.4 0 0);
 
-		--md-sys-color-primary: oklch(0 0 0); /* Black as primary */
-		--md-sys-color-on-primary: oklch(1 0 0);
-		--md-sys-color-primary-container: oklch(0.9 0 0);
-		--md-sys-color-on-primary-container: oklch(0 0 0);
+	--color-md-primary: oklch(0.15 0 0); /* Primary button background (Dark) */
+	--color-md-on-primary: oklch(0.99 0 0); /* Primary button text (Light) */
+	--color-md-primary-container: oklch(0.92 0 0);
+	--color-md-on-primary-container: oklch(0.15 0 0);
 
-		--md-sys-color-secondary: oklch(0.4 0 0);
-		--md-sys-color-on-secondary: oklch(1 0 0);
-		--md-sys-color-secondary-container: oklch(0.94 0 0);
-		--md-sys-color-on-secondary-container: oklch(0.1 0 0);
+	--color-md-secondary: oklch(0.5 0 0);
+	--color-md-on-secondary: oklch(1 0 0);
+	--color-md-secondary-container: oklch(0.94 0 0);
+	--color-md-on-secondary-container: oklch(0.15 0 0);
 
-		--md-sys-color-error: oklch(0 0 0); /* Black for error in strict B&W */
-		--md-sys-color-outline: oklch(0.8 0 0);
-	}
+	--color-md-error: oklch(0.4 0 0);
+	--color-md-outline: oklch(0.8 0 0);
 
-	.dark {
-		--md-sys-color-background: oklch(0 0 0); /* Pure Black */
-		--md-sys-color-on-background: oklch(1 0 0); /* Pure White */
-
-		--md-sys-color-surface: oklch(0 0 0);
-		--md-sys-color-surface-container: oklch(0.1 0 0); /* Very Dark Gray */
-		--md-sys-color-surface-variant: oklch(0.15 0 0);
-		--md-sys-color-on-surface: oklch(1 0 0);
-		--md-sys-color-on-surface-variant: oklch(0.7 0 0); /* Light Gray text */
-
-		--md-sys-color-primary: oklch(1 0 0); /* White as primary */
-		--md-sys-color-on-primary: oklch(0 0 0);
-		--md-sys-color-primary-container: oklch(0.2 0 0);
-		--md-sys-color-on-primary-container: oklch(1 0 0);
-
-		--md-sys-color-secondary: oklch(0.8 0 0);
-		--md-sys-color-on-secondary: oklch(0 0 0);
-		--md-sys-color-secondary-container: oklch(0.25 0 0);
-		--md-sys-color-on-secondary-container: oklch(0.95 0 0);
-
-		--md-sys-color-error: oklch(1 0 0);
-		--md-sys-color-outline: oklch(0.3 0 0);
-	}
+	--radius-3xl: 24px;
+	--radius-4xl: 32px;
 }
 
-body {
-	@apply bg-md-background text-md-onBackground transition-colors duration-300;
-	font-family: 'Inter', sans-serif;
-	-webkit-font-smoothing: antialiased;
+@layer base {
+	.dark {
+		--color-md-background: oklch(0.1 0 0);
+		--color-md-on-background: oklch(0.95 0 0);
+
+		--color-md-surface: oklch(0.12 0 0);
+		--color-md-surface-container: oklch(0.15 0 0);
+		--color-md-surface-variant: oklch(0.25 0 0);
+		--color-md-on-surface: oklch(0.95 0 0);
+		--color-md-on-surface-variant: oklch(0.7 0 0);
+
+		--color-md-primary: oklch(0.95 0 0); /* Primary button background (Light) */
+		--color-md-on-primary: oklch(0.1 0 0); /* Primary button text (Dark) */
+		--color-md-primary-container: oklch(0.25 0 0);
+		--color-md-on-primary-container: oklch(0.95 0 0);
+
+		--color-md-secondary: oklch(0.7 0 0);
+		--color-md-on-secondary: oklch(0.1 0 0);
+		--color-md-secondary-container: oklch(0.2 0 0);
+		--color-md-on-secondary-container: oklch(0.9 0 0);
+
+		--color-md-error: oklch(0.9 0 0);
+		--color-md-outline: oklch(0.4 0 0);
+	}
+
+	body {
+		background-color: var(--color-md-background);
+		color: var(--color-md-on-background);
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
+		font-family: 'Inter', sans-serif;
+		-webkit-font-smoothing: antialiased;
+	}
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -64,9 +69,10 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-	@apply bg-transparent;
+	background-color: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-	@apply bg-slate-400 dark:bg-slate-600 rounded-full;
+	background-color: color-mix(in oklch, var(--color-md-on-surface), transparent 80%);
+	border-radius: 9999px;
 }
