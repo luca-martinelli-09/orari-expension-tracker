@@ -4,6 +4,6 @@
 	let { children, class: className = '' } = $props<{ children: Snippet; class?: string }>();
 </script>
 
-<thead class="bg-md-surface-container border-b border-md-outline/10 {className}">
+<thead class="bg-md-surface-container border-b border-md-on-surface {className}">
 	{@render children()}
 </thead>

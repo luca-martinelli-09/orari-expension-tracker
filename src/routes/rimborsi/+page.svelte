@@ -171,10 +171,14 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Rimborsi | Journal</title>
+</svelte:head>
+
 <div class="flex flex-col gap-8">
 	<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 		<div>
-			<h2 class="text-5xl font-black text-md-on-surface tracking-tighter uppercase">Rimborsi</h2>
+			<h2 class="text-3xl md:text-5xl font-black text-md-on-surface tracking-tighter uppercase">Rimborsi</h2>
 			<p
 				class="text-[10px] font-black uppercase tracking-[0.3em] text-md-on-surface-variant/60 mt-1"
 			>
@@ -184,15 +188,15 @@
 		<div class="flex flex-wrap gap-3">
 			<Button variant="primary" onclick={openNew}>
 				<Plus size={20} strokeWidth={3} />
-				<span>Aggiungi</span>
+				<span class="hidden md:inline">Aggiungi</span>
 			</Button>
 			<Button variant="secondary" onclick={syncTrenitalia} disabled={loading}>
 				<RefreshCw size={20} class={loading ? 'animate-spin' : ''} strokeWidth={3} />
-				<span>{loading ? syncStatus : 'Sync Trenitalia'}</span>
+				<span class="hidden md:inline">{loading ? syncStatus : 'Sync Trenitalia'}</span>
 			</Button>
 			<Button variant="secondary" onclick={exportPdf}>
 				<Download size={20} strokeWidth={3} />
-				<span>Esporta PDF</span>
+				<span class="hidden md:inline">Esporta PDF</span>
 			</Button>
 		</div>
 	</div>
@@ -240,7 +244,7 @@
 							>{format(new Date(expense.date), 'dd MMM')}</TableCell
 						>
 						<TableCell>
-							<div class="font-black text-sm uppercase tracking-tight">{expense.description}</div>
+							<div class="font-black text-sm uppercase tracking-tight max-w-[120px] md:max-w-none truncate">{expense.description}</div>
 							{#if expense.attachments.length}
 								<div
 									class="flex items-center gap-1 mt-1 text-[9px] font-black uppercase border-2 border-md-on-surface w-fit px-2 py-0.5 rounded-none opacity-60"

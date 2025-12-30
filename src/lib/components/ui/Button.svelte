@@ -28,7 +28,7 @@
 	const variants: Record<Variant, string> = {
 		primary: 'bg-md-primary text-md-on-primary border-md-primary hover:brightness-125 px-6 py-3',
 		secondary:
-			'bg-md-surface-variant text-md-on-surface border-md-outline hover:bg-md-on-surface hover:text-md-surface px-6 py-3',
+			'bg-md-surface-variant text-md-on-surface border-md-outline hover:bg-md-on-surface hover:text-md-surface hover:border-md-on-surface px-6 py-3',
 		danger:
 			'bg-transparent text-md-on-surface border-md-on-surface hover:bg-md-on-surface hover:text-md-surface px-6 py-3',
 		ghost:

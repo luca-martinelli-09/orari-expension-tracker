@@ -99,7 +99,7 @@
 			>Chiudi</Button
 		>
 		<Button variant="primary" onclick={save} class="uppercase tracking-widest text-[10px]"
-			>Salva Modifiche</Button
+			>Salva</Button
 		>
 	{/snippet}
 </Modal>

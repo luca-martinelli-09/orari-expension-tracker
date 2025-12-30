@@ -44,12 +44,12 @@
 		class="min-h-screen bg-md-background text-md-on-background flex flex-col transition-colors duration-300"
 	>
 		<nav
-			class="bg-md-background/80 backdrop-blur-md sticky top-0 z-40 px-6 py-6 transition-colors duration-300"
+			class="bg-md-background/80 backdrop-blur-md sticky top-0 z-40 px-4 py-4 md:px-6 md:py-6 transition-colors duration-300"
 		>
 			<div
-				class="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0"
+				class="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0"
 			>
-				<div class="flex items-center gap-8 w-full md:w-auto justify-between md:justify-start">
+				<div class="flex items-center gap-4 md:gap-8 w-full md:w-auto justify-between md:justify-start">
 					<div class="flex items-center gap-3">
 						<div class="bg-md-primary text-md-on-primary p-2.5 rounded-full">
 							<Calendar size={22} />
@@ -73,12 +73,12 @@
 				</div>
 
 				<div
-					class="flex items-center gap-2 bg-md-surface-variant p-1 rounded-full border border-md-outline/10"
+					class="flex items-center gap-1 md:gap-2 bg-md-surface-variant p-1 rounded-full border border-md-outline/10 w-full md:w-auto overflow-x-auto no-scrollbar justify-center md:justify-start"
 				>
 					{#each navItems as item}
 						<a
 							href={item.href}
-							class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer
+							class="px-4 py-2 md:px-6 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer whitespace-nowrap
                             {$page.url.pathname === item.href
 								? 'bg-md-primary text-md-on-primary'
 								: 'text-md-on-surface-variant hover:bg-md-on-surface hover:text-md-background'}"
@@ -104,9 +104,7 @@
 			</div>
 		</nav>
 
-		<main
-			class="flex-1 p-4 md:p-8 container mx-auto max-w-[1600px] animate-in fade-in duration-700"
-		>
+		<main class="flex-1 p-4 md:p-8 container mx-auto max-w-400 animate-in fade-in duration-700">
 			{@render children()}
 		</main>
 	</div>
