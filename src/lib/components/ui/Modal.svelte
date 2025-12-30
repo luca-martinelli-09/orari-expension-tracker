@@ -1,79 +1,78 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
-    import { X } from 'lucide-svelte';
+    import { Dialog } from "bits-ui";
+    import { X } from "lucide-svelte";
+    import type { Snippet } from "svelte";
+    import Button from "./Button.svelte";
+    import { fade, fly } from "svelte/transition";
 
-    let {
-        open = $bindable(),
-        onClose,
-        title,
-        subtitle,
-        children,
-        footer
-    } = $props<{
-        open: boolean,
-        onClose: () => void,
-        title: string,
-        subtitle?: string,
-        children: Snippet,
-        footer?: Snippet
+    let { 
+        children, 
+        title, 
+        subtitle, 
+        onClose, 
+        footer 
+    } = $props<{ 
+        children: Snippet, 
+        title: string, 
+        subtitle?: string, 
+        onClose: () => void, 
+        footer?: Snippet 
     }>();
 
-    function handleBackdropClick() {
-        onClose();
-    }
-
-    function handleKeyUp(e: KeyboardEvent) {
-        if (e.key === 'Escape') {
+    let open = $state(true);
+    
+    function handleOpenChange(isOpen: boolean) {
+        if (!isOpen) {
             onClose();
         }
     }
 </script>
 
-<svelte:window onkeyup={handleKeyUp} />
-
-{#if open}
-    <!-- Backdrop -->
-    <div
-        class="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all"
-        onclick={handleBackdropClick}
-        role="dialog"
-        aria-modal="true"
-        tabindex="-1"
-    >
-        <!-- Modal Container -->
-        <div
-            class="bg-[#f7f9ff] dark:bg-[#1c1b1f] rounded-[28px] shadow-2xl w-full max-w-md overflow-hidden max-h-[90vh] flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-200"
-            onclick={(e) => e.stopPropagation()}
-            role="document"
-        >
-            <!-- Header -->
-            <div class="p-6 pb-2 flex justify-between items-center border-b border-slate-100 dark:border-slate-800/50">
-                <div>
-                    <h3 class="font-medium text-2xl text-slate-900 dark:text-slate-100">{title}</h3>
-                    {#if subtitle}
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{subtitle}</p>
-                    {/if}
-                </div>
-                <button
-                    onclick={onClose}
-                    class="p-3 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 text-slate-600 dark:text-slate-300 transition-colors"
-                    aria-label="Chiudi"
-                >
-                    <X size={20} />
-                </button>
-            </div>
-
-            <!-- Body -->
-            <div class="p-6 space-y-6 overflow-y-auto flex-1">
-                {@render children()}
-            </div>
-
-            <!-- Footer -->
-            {#if footer}
-                <div class="p-6 pt-2 border-t border-slate-100 dark:border-slate-800/50 flex justify-end gap-3">
-                    {@render footer()}
-                </div>
-            {/if}
+<Dialog.Root bind:open onOpenChange={handleOpenChange}>
+    <Dialog.Portal>
+        <div transition:fade={{ duration: 200 }}>
+            <Dialog.Overlay 
+                class="fixed inset-0 z-50 bg-md-onSurface/40 backdrop-blur-md" 
+            />
         </div>
-    </div>
-{/if}
+        <div 
+            class="fixed left-[50%] top-[50%] z-50 w-full max-w-2xl translate-x-[-50%] translate-y-[-50%] focus:outline-none"
+            transition:fly={{ y: 20, duration: 300 }}
+        >
+            <Dialog.Content 
+                class="bg-md-background border-2 border-md-onSurface p-0 shadow-2xl"
+            >
+                <!-- Header -->
+                <div class="p-8 pb-4 flex justify-between items-start border-b-2 border-md-onSurface/5">
+                    <div>
+                        <Dialog.Title class="text-3xl font-black uppercase tracking-tighter text-md-onSurface">
+                            {title}
+                        </Dialog.Title>
+                        {#if subtitle}
+                            <Dialog.Description class="text-[10px] font-black uppercase tracking-[0.2em] text-md-onSurface/40 mt-1">
+                                {subtitle}
+                            </Dialog.Description>
+                        {/if}
+                    </div>
+                    <Dialog.Close 
+                        class="p-2 rounded-full hover:bg-md-surfaceVariant text-md-onSurface transition-colors border-none"
+                    >
+                        <X size={20} strokeWidth={3} />
+                    </Dialog.Close>
+                </div>
+
+                <!-- Scrollable Body -->
+                <div class="p-8 max-h-[60vh] overflow-y-auto custom-scrollbar text-md-onSurface">
+                    {@render children()}
+                </div>
+
+                <!-- Footer -->
+                {#if footer}
+                    <div class="p-8 pt-4 border-t-2 border-md-onSurface/5 bg-md-surfaceVariant/10 flex justify-end gap-3 text-md-onSurface">
+                        {@render footer()}
+                    </div>
+                {/if}
+            </Dialog.Content>
+        </div>
+    </Dialog.Portal>
+</Dialog.Root>

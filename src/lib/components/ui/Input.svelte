@@ -1,44 +1,37 @@
 <script lang="ts">
-    type Variant = 'default' | 'filled';
+    import { Label } from "bits-ui";
 
-    let {
-        value = $bindable(),
-        id,
-        label,
-        type = 'text',
-        placeholder = '',
+    let { 
+        value = $bindable(), 
+        id = crypto.randomUUID(), 
+        label, 
+        type = 'text', 
+        placeholder = '', 
         step,
-        variant = 'default',
-        class: className = ''
-    } = $props<{
-        value: any,
-        id?: string,
-        label?: string,
-        type?: string,
-        placeholder?: string,
+        class: className = '' 
+    } = $props<{ 
+        value: any, 
+        id?: string, 
+        label?: string, 
+        type?: string, 
+        placeholder?: string, 
         step?: string | number,
-        variant?: Variant,
-        class?: string
+        class?: string 
     }>();
-
-    const variantClasses = {
-        default: 'bg-slate-50 dark:bg-[#25252b]',
-        filled: 'bg-white dark:bg-slate-800'
-    };
 </script>
 
-<div class="{className} space-y-1">
+<div class="{className} space-y-2">
     {#if label}
-        <label for={id} class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide ml-1">
+        <Label.Root for={id} class="block text-[10px] font-black uppercase tracking-[0.2em] text-md-onSurface/40 ml-1">
             {label}
-        </label>
+        </Label.Root>
     {/if}
-    <input
-        {id}
-        {type}
+    <input 
+        {id} 
+        {type} 
         {step}
-        bind:value
+        bind:value 
         {placeholder}
-        class="w-full rounded-2xl border-none {variantClasses[variant]} text-slate-900 dark:text-white shadow-sm focus:ring-2 focus:ring-indigo-500 p-4 transition-all placeholder:text-slate-400"
+        class="w-full rounded-none border-2 border-md-onSurface bg-md-background text-md-onSurface shadow-sm focus:ring-4 focus:ring-md-onSurface/10 p-4 transition-all placeholder:text-md-onSurface/20 font-bold uppercase tracking-widest text-sm"
     />
 </div>

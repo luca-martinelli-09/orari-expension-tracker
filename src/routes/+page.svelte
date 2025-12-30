@@ -7,7 +7,8 @@
     import { Download, Paperclip, Clock } from 'lucide-svelte';
     import { generateHoursPdf } from '$lib/pdf';
     import DayEditor from '$lib/components/DayEditor.svelte';
-    import Badge from '$lib/components/ui/Badge.svelte';
+    import Button from '$lib/components/ui/Button.svelte';
+    import Card from '$lib/components/ui/Card.svelte';
 
     let selectedDay = $state<string | null>(null);
 
@@ -49,32 +50,29 @@
     }
 </script>
 
-<div class="flex flex-col gap-6">
-    <!-- Header with FAB-like Action -->
+<div class="flex flex-col gap-8">
     <div class="flex items-center justify-between">
         <div>
-            <h2 class="text-4xl font-normal text-slate-800 dark:text-slate-100 tracking-tight">Calendario</h2>
+            <h2 class="text-5xl font-black text-md-onSurface tracking-tighter uppercase">Calendario</h2>
+            <p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-onSurfaceVariant/60 mt-1">Registrazione Ore & Permessi</p>
         </div>
         
-        <button onclick={exportPdf} class="flex items-center gap-2 bg-indigo-600 dark:bg-indigo-300 text-white dark:text-indigo-900 px-6 py-3 rounded-full hover:brightness-110 transition-all duration-200 font-medium">
-            <Download size={20} />
-            <span>Esporta PDF</span>
-        </button>
+        <Button variant="primary" onclick={exportPdf}>
+            <Download size={20} strokeWidth={3} />
+            <span class="uppercase tracking-widest text-xs font-bold">Esporta PDF</span>
+        </Button>
     </div>
 
-    <!-- Calendar Card -->
-    <div class="bg-white dark:bg-[#1e1e24] rounded-[32px] p-6 shadow-sm border border-slate-100 dark:border-slate-800/50">
-        <!-- Weekday Headers -->
-        <div class="grid grid-cols-7 mb-4">
+    <Card class="p-8 border-2 border-md-onSurface shadow-none rounded-none">
+        <div class="grid grid-cols-7 mb-8 border-b-2 border-md-onSurface/5">
             {#each ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM'] as day}
-                <div class="text-center text-xs font-bold text-slate-400 dark:text-slate-500 py-2 tracking-widest">
+                <div class="text-center text-[10px] font-black text-md-onSurfaceVariant py-4 tracking-[0.2em]">
                     {day}
                 </div>
             {/each}
         </div>
 
-        <!-- Days Grid -->
-        <div class="grid grid-cols-7 gap-3 auto-rows-[minmax(110px,auto)]">
+        <div class="grid grid-cols-7 gap-2">
             {#each days as date}
                 {@const isCurrentMonth = date.getMonth() === store.state.selectedMonth}
                 {@const dayData = getDayData(date)}
@@ -82,51 +80,47 @@
                 {@const isWknd = isWeekend(date)}
                 {@const hours = calculateHours(dayData)}
                 {@const isToday = new Date().toDateString() === date.toDateString()}
+                {@const isNonWork = holiday || isWknd || dayData.type !== 'Lavoro'}
                 
                 <button 
                     onclick={() => handleDayClick(date)}
-                    class="relative p-3 rounded-[24px] text-left transition-all duration-200 group border border-transparent flex flex-col justify-between
-                    {!isCurrentMonth ? 'opacity-30 grayscale hover:opacity-50' : 'hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:scale-[1.02]'}
-                    {selectedDay === format(date, 'yyyy-MM-dd') ? 'ring-2 ring-indigo-500 dark:ring-indigo-400 shadow-md' : ''}
-                    {isToday && isCurrentMonth ? 'bg-indigo-50/50 dark:bg-indigo-900/10' : 'bg-slate-50/30 dark:bg-[#25252b]'}
+                    class="relative p-4 text-left transition-all duration-300 group flex flex-col justify-between aspect-square border-2
+                    {!isCurrentMonth ? 'opacity-20 grayscale border-md-onSurface/5' : 'hover:bg-md-onSurface hover:text-md-surface border-md-onSurface/10'}
+                    {selectedDay === format(date, 'yyyy-MM-dd') ? 'bg-md-onSurface text-md-surface z-10 scale-105 shadow-2xl border-md-onSurface' : (isNonWork && isCurrentMonth ? 'bg-md-onSurface/5' : 'bg-md-background')}
+                    {isToday && isCurrentMonth ? 'ring-2 ring-inset ring-md-onSurface' : ''}
                     "
                 >
-                    <!-- Date Header -->
-                    <div class="flex justify-between items-center w-full">
-                        <span class="text-xl font-semibold tracking-tight {isToday ? 'text-indigo-600 dark:text-indigo-400' : (isWknd || holiday ? 'text-rose-500 dark:text-rose-400' : 'text-slate-700 dark:text-slate-200')}">
+                    <div class="flex justify-between items-start w-full">
+                        <span class="text-2xl font-black tracking-tighter {isToday ? 'underline underline-offset-4 decoration-4' : ''}">
                             {format(date, 'd')}
                         </span>
                         {#if dayData.attachments.length > 0}
-                             <div class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full p-1.5">
-                                <Paperclip size={12} strokeWidth={3} />
+                             <div class="border border-current rounded-full p-1">
+                                <Paperclip size={10} strokeWidth={3} />
                             </div>
                         {/if}
                     </div>
 
-                    <!-- Content Body -->
-                    <div class="flex flex-col gap-1.5 mt-2">
+                    <div class="flex flex-col gap-1 mt-2">
                         {#if holiday}
-                            <Badge variant="danger" size="sm" class="justify-center truncate">
+                            <div class="text-[9px] font-black uppercase tracking-tight truncate border-t border-current pt-1 italic">
                                 {holiday}
-                            </Badge>
+                            </div>
                         {:else if dayData.type !== 'Lavoro'}
-                            <Badge variant="primary" size="sm" class="justify-center truncate">
+                            <div class="text-[9px] font-black uppercase tracking-tight truncate border-t border-current pt-1">
                                 {dayData.type}
-                            </Badge>
+                            </div>
                         {:else if hours > 0}
-                            <Badge variant="success" size="md" class="justify-center">
-                                <Clock size={12} strokeWidth={2.5} />
+                            <div class="text-[10px] font-black flex items-center gap-1">
+                                <Clock size={10} strokeWidth={3} />
                                 {formatDuration(hours)}
-                            </Badge>
-                        {:else}
-                             <!-- Spacer for alignment or empty state indicator if needed -->
-                             <div class="h-6"></div>
+                            </div>
                         {/if}
                     </div>
                 </button>
             {/each}
         </div>
-    </div>
+    </Card>
 </div>
 
 {#if selectedDay}

@@ -16,24 +16,24 @@
         class?: string
     }>();
 
-    const variantClasses = {
-        primary: 'bg-indigo-100/80 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-200',
-        success: 'bg-emerald-100/80 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200',
-        danger: 'bg-rose-100/80 dark:bg-rose-900/30 text-rose-700 dark:text-rose-200',
-        warning: 'bg-amber-100/80 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200',
-        info: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400',
-        default: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+    const variantClasses: Record<Variant, string> = {
+        primary: 'bg-md-primary text-md-onPrimary border-md-primary',
+        success: 'bg-md-onSurface text-md-surface border-md-onSurface',
+        danger: 'border-2 border-md-onSurface text-md-onSurface',
+        warning: 'bg-md-onSurface/10 text-md-onSurface border-md-onSurface/20',
+        info: 'bg-md-surface-variant text-md-onSurface border-md-onSurface/10',
+        default: 'border border-md-onSurface/30 text-md-onSurface/60'
     };
 
-    const sizeClasses = {
-        sm: 'text-[10px] px-2.5 py-1 rounded-full',
-        md: 'text-[11px] px-2 py-1 rounded-lg',
-        lg: 'text-[12px] px-3 py-1.5 rounded-lg'
+    const sizeClasses: Record<Size, string> = {
+        sm: 'text-[9px] px-2 py-0.5 rounded-none',
+        md: 'text-[10px] px-3 py-1 rounded-none',
+        lg: 'text-[11px] px-4 py-1.5 rounded-none'
     };
 
-    const baseClasses = 'font-bold inline-flex items-center justify-center gap-1.5 uppercase tracking-wide';
+    const baseClasses = 'font-black inline-flex items-center justify-center gap-1.5 uppercase tracking-widest transition-all duration-200 border';
 </script>
 
-<div class="{baseClasses} {variantClasses[variant]} {sizeClasses[size]} {className}">
+<div class="{baseClasses} {variantClasses[variant as Variant]} {sizeClasses[size as Size]} {className}">
     {@render children()}
 </div>

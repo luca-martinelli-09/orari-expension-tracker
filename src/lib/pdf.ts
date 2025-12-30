@@ -426,9 +426,9 @@ async function embedAttachment(
 }
 
 function downloadBlob(bytes: Uint8Array, name: string) {
-  const blob = new Blob([bytes], { type: "application/pdf" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = name;
-  link.click();
+    const blob = new Blob([bytes.buffer as ArrayBuffer], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = name;
+    link.click();
 }

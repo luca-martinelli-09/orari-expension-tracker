@@ -1,6 +1,9 @@
 <script lang="ts">
     import { store } from '$lib/store.svelte';
-    import { Save, User, Lock, Calendar } from 'lucide-svelte';
+    import { Save, User, Lock, CheckCircle2 } from 'lucide-svelte';
+    import Button from '$lib/components/ui/Button.svelte';
+    import Card from '$lib/components/ui/Card.svelte';
+    import Input from '$lib/components/ui/Input.svelte';
 
     let saved = $state(false);
 
@@ -12,96 +15,68 @@
     }
 </script>
 
-<div class="max-w-2xl mx-auto flex flex-col gap-8">
-    <div>
-        <h2 class="text-4xl font-normal text-slate-800 dark:text-slate-100 tracking-tight">Impostazioni</h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-1">Configura le tue credenziali e preferenze.</p>
+<div class="max-w-2xl mx-auto flex flex-col gap-12">
+    <div class="flex flex-col gap-2">
+        <h2 class="text-5xl font-black text-md-onSurface tracking-tighter uppercase">Impostazioni</h2>
+        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-md-onSurfaceVariant/60">Configurazione Profilo & Credenziali</p>
     </div>
 
-    <!-- General Settings Card -->
-    <div class="bg-white dark:bg-[#1e1e24] p-8 rounded-[32px] shadow-sm border border-slate-100 dark:border-slate-800/50 space-y-6">
-        <div class="flex items-start gap-4">
-            <div class="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-2xl text-blue-700 dark:text-blue-300">
-                <User size={24} />
+    <div class="space-y-12">
+        <!-- User Profile Section -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-4 border-b-2 border-md-onSurface/5 pb-4">
+                <div class="bg-md-onSurface text-md-surface p-2 rounded-full">
+                    <User size={20} strokeWidth={3} />
+                </div>
+                <h3 class="text-xl font-black uppercase tracking-tight text-md-onSurface">Profilo Utente</h3>
             </div>
-            <div>
-                <h3 class="text-xl font-medium text-slate-900 dark:text-white">Profilo Utente</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 text-sm mt-1">Queste informazioni appariranno nei PDF esportati.</p>
-            </div>
-        </div>
 
-        <div class="space-y-4">
-            <div>
-                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2" for="username">Nome e Cognome</label>
-                <input 
-                    type="text" 
-                    id="username" 
-                    bind:value={store.state.userName}
-                    class="w-full bg-slate-50 dark:bg-[#25252b] border-none rounded-2xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 transition-shadow"
-                    placeholder="Mario Rossi"
+            <Card class="p-8">
+                <Input 
+                    label="Nome e Cognome" 
+                    placeholder="Mario Rossi" 
+                    bind:value={store.state.userName} 
                 />
+                <p class="text-[9px] font-bold uppercase tracking-widest text-md-onSurface/40 mt-4 ml-1">
+                    * Apparirà nell'intestazione e nelle firme dei PDF.
+                </p>
+            </Card>
+        </section>
+
+        <!-- Trenitalia Credentials Section -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-4 border-b-2 border-md-onSurface/5 pb-4">
+                <div class="bg-md-onSurface text-md-surface p-2 rounded-full">
+                    <Lock size={20} strokeWidth={3} />
+                </div>
+                <h3 class="text-xl font-black uppercase tracking-tight text-md-onSurface">Trenitalia</h3>
             </div>
-        </div>
+
+            <Card class="p-8 space-y-6">
+                <div class="grid grid-cols-1 gap-6">
+                    <Input label="Username" placeholder="Il tuo username" bind:value={store.state.trenitaliaUser} />
+                    <Input label="Password" type="password" placeholder="••••••••" bind:value={store.state.trenitaliaPass} />
+                </div>
+
+                <div class="p-4 border-2 border-md-onSurface/10 bg-md-surfaceVariant/5 text-[10px] font-bold uppercase tracking-widest text-md-onSurface/60 leading-relaxed">
+                    Le credenziali sono salvate localmente (IndexedDB). Non vengono mai trasmesse a terzi.
+                </div>
+            </Card>
+        </section>
     </div>
 
-    <!-- Trenitalia Card -->
-    <div class="bg-white dark:bg-[#1e1e24] p-8 rounded-[32px] shadow-sm border border-slate-100 dark:border-slate-800/50 space-y-6">
-        <div class="flex items-start gap-4">
-            <div class="bg-indigo-100 dark:bg-indigo-900/40 p-3 rounded-2xl text-indigo-700 dark:text-indigo-300">
-                <User size={24} />
+    <!-- Action Bar -->
+    <div class="flex items-center justify-end gap-6 pt-4 border-t-2 border-md-onSurface/5">
+        {#if saved}
+            <div class="flex items-center gap-2 text-md-onSurface text-xs font-black uppercase tracking-widest animate-in fade-in slide-in-from-right-4 duration-300">
+                <CheckCircle2 size={16} strokeWidth={3} />
+                <span>Salvato</span>
             </div>
-            <div>
-                <h3 class="text-xl font-medium text-slate-900 dark:text-white">Account Trenitalia</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Per scaricare biglietti e prezzi automaticamente.</p>
-            </div>
-        </div>
-
-        <div class="space-y-4">
-            <div>
-                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2" for="user">Username</label>
-                <input 
-                    type="text" 
-                    id="user" 
-                    bind:value={store.state.trenitaliaUser}
-                    class="w-full bg-slate-50 dark:bg-[#25252b] border-none rounded-2xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 transition-shadow"
-                    placeholder="Username"
-                />
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2" for="pass">Password</label>
-                <input 
-                    type="password" 
-                    id="pass" 
-                    bind:value={store.state.trenitaliaPass}
-                    class="w-full bg-slate-50 dark:bg-[#25252b] border-none rounded-2xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 transition-shadow"
-                    placeholder="Password"
-                />
-            </div>
-        </div>
+        {/if}
+        
+        <Button variant="primary" onclick={save} class="px-12 py-4 text-xs tracking-[0.2em] uppercase font-black">
+            <Save size={18} strokeWidth={3} />
+            <span>Salva</span>
+        </Button>
     </div>
-
-        <!-- Action Bar -->
-
-        <div class="flex justify-end">
-
-            <button onclick={save} class="bg-indigo-600 dark:bg-indigo-300 text-white dark:text-indigo-900 px-8 py-3 rounded-full font-medium hover:brightness-110 transition-all duration-200 flex items-center gap-2">
-
-                {#if saved}
-
-                    <span>Salvato!</span>
-
-                {:else}
-
-                    <Lock size={20} />
-
-                    <span>Salva Impostazioni</span>
-
-                {/if}
-
-            </button>
-
-        </div>
-
-    </div>
-
-    
+</div>

@@ -25,22 +25,22 @@
         onDismiss?.();
     }
 
-    const variantClasses = {
-        info: 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200',
-        warning: 'bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100',
-        success: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200',
-        error: 'bg-rose-100 dark:bg-rose-900/40 text-rose-800 dark:text-rose-200'
+    const variantClasses: Record<Variant, string> = {
+        info: 'bg-md-surface-variant border-md-onSurface/10 text-md-onSurface',
+        warning: 'bg-md-onSurface/5 border-md-onSurface/20 text-md-onSurface',
+        success: 'bg-md-primary text-md-onPrimary border-md-primary',
+        error: 'border-2 border-md-onSurface bg-md-background text-md-onSurface'
     };
 </script>
 
 {#if visible}
-    <div class="{variantClasses[variant]} px-6 py-4 rounded-[24px] font-medium flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
+    <div class="{variantClasses[variant as Variant]} px-6 py-4 rounded-none flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+        <div class="flex items-center gap-3 text-xs font-black uppercase tracking-widest">
             {@render children()}
         </div>
 
         {#if action || dismissible}
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-shrink-0">
                 {#if action}
                     <div>
                         {@render action()}
@@ -49,10 +49,10 @@
                 {#if dismissible}
                     <button
                         onclick={handleDismiss}
-                        class="p-1 hover:opacity-70 transition-opacity"
+                        class="p-1.5 hover:bg-white/10 dark:hover:bg-white/5 rounded-full transition-all duration-200"
                         aria-label="Chiudi"
                     >
-                        <X size={18} />
+                        <X size={16} strokeWidth={3} />
                     </button>
                 {/if}
             </div>

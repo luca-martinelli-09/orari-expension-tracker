@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Button } from "bits-ui";
     import type { Snippet } from 'svelte';
 
     type Variant = 'primary' | 'secondary' | 'danger' | 'ghost' | 'icon';
@@ -9,32 +10,35 @@
         onclick, 
         disabled = false, 
         type = 'button',
-        class: className = '' 
+        class: className = '',
+        ...rest
     } = $props<{ 
         children: Snippet, 
         variant?: Variant, 
         onclick?: () => void, 
         disabled?: boolean,
         type?: 'button' | 'submit' | 'reset',
-        class?: string
+        class?: string,
+        [key: string]: any
     }>();
 
-    const baseClasses = "font-medium transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2";
+    const baseClasses = "font-semibold transition-all duration-200 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-2 border-2";
     
-    const variants = {
-        primary: "bg-indigo-600 dark:bg-indigo-300 text-white dark:text-indigo-900 hover:brightness-110 rounded-full px-6 py-3 shadow-sm",
-        secondary: "bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 hover:brightness-105 rounded-full px-5 py-3",
-        danger: "bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900/50 rounded-full px-5 py-3",
-        ghost: "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full px-4 py-2",
-        icon: "p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700/50 text-slate-500 dark:text-slate-400"
+    const variants: Record<Variant, string> = {
+        primary: "bg-md-primary text-md-onPrimary border-md-primary hover:bg-transparent hover:text-md-primary rounded-full px-6 py-2.5",
+        secondary: "bg-transparent text-md-onSurface border-md-outline hover:bg-md-onSurface hover:text-md-surface rounded-full px-6 py-2.5",
+        danger: "bg-transparent text-md-onSurface border-md-onSurface hover:bg-md-onSurface hover:text-md-surface rounded-full px-6 py-2.5",
+        ghost: "bg-transparent text-md-onSurface border-transparent hover:bg-md-surfaceVariant rounded-full px-4 py-2",
+        icon: "p-2 rounded-full border-transparent hover:bg-md-surfaceVariant text-md-onSurface"
     };
 </script>
 
-<button 
+<Button.Root 
     {type}
-    class="{baseClasses} {variants[variant]} {className}" 
-    {onclick} 
-    {disabled}
+    class="{baseClasses} {variants[variant as Variant]} {className}" 
+    onclick={onclick} 
+    disabled={disabled}
+    {...rest}
 >
     {@render children()}
-</button>
+</Button.Root>
