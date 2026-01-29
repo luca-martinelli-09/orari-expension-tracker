@@ -25,6 +25,22 @@
 		'Domenica'
 	];
 
+	// Watch for type changes and clear hours if switching to Ferie, Permesso, or Malattia
+	let previousType = $state<DayType>(day.type);
+
+	$effect(() => {
+		const currentType = day.type;
+		if (currentType !== previousType) {
+			if (currentType === 'Ferie' || currentType === 'Permesso' || currentType === 'Malattia') {
+				day.morningStart = '';
+				day.morningEnd = '';
+				day.afternoonStart = '';
+				day.afternoonEnd = '';
+			}
+			previousType = currentType;
+		}
+	});
+
 	function save() {
 		store.updateDay(date, day);
 		onClose();
@@ -63,28 +79,26 @@
 		<Select label="Tipologia Giornata" bind:value={day.type} options={types} />
 
 		<!-- Hours Section -->
-		{#if day.type === 'Lavoro'}
+		<div
+			transition:slide
+			class="space-y-6 border-2 border-md-on-surface p-6 bg-md-surface-variant/5"
+		>
 			<div
-				transition:slide
-				class="space-y-6 border-2 border-md-on-surface p-6 bg-md-surface-variant/5"
+				class="flex items-center gap-3 text-md-on-surface border-b-2 border-md-on-surface/5 pb-4"
 			>
-				<div
-					class="flex items-center gap-3 text-md-on-surface border-b-2 border-md-on-surface/5 pb-4"
-				>
-					<Clock size={22} strokeWidth={2.5} />
-					<span class="text-xs font-black uppercase tracking-[0.2em]">Orari Sessione</span>
-				</div>
-
-				<div class="grid grid-cols-2 gap-6">
-					<Input label="Inizio Mattina" type="time" bind:value={day.morningStart} />
-					<Input label="Fine Mattina" type="time" bind:value={day.morningEnd} />
-				</div>
-				<div class="grid grid-cols-2 gap-6">
-					<Input label="Inizio Pomeriggio" type="time" bind:value={day.afternoonStart} />
-					<Input label="Fine Pomeriggio" type="time" bind:value={day.afternoonEnd} />
-				</div>
+				<Clock size={22} strokeWidth={2.5} />
+				<span class="text-xs font-black uppercase tracking-[0.2em]">Orari Sessione</span>
 			</div>
-		{/if}
+
+			<div class="grid grid-cols-2 gap-6">
+				<Input label="Inizio Mattina" type="time" bind:value={day.morningStart} />
+				<Input label="Fine Mattina" type="time" bind:value={day.morningEnd} />
+			</div>
+			<div class="grid grid-cols-2 gap-6">
+				<Input label="Inizio Pomeriggio" type="time" bind:value={day.afternoonStart} />
+				<Input label="Fine Pomeriggio" type="time" bind:value={day.afternoonEnd} />
+			</div>
+		</div>
 
 		<!-- Attachment Manager -->
 		<AttachmentManager

@@ -52,28 +52,60 @@ export async function generateHoursPdf(
 		} else if (isWknd) {
 			const dayName = format(date, 'EEEE', { locale: it });
 			row.push(dayName.charAt(0).toUpperCase() + dayName.slice(1), '', '', '', '', '');
-		} else if (dayData.type !== 'Lavoro') {
-			row.push(dayData.type, '', '', '', '', '');
 		} else {
-			row.push(
-				dayData.morningStart,
-				dayData.morningEnd,
-				dayData.afternoonStart,
-				dayData.afternoonEnd
-			);
-			const parse = (t: string) => {
-				if (!t) return 0;
-				const [h, m] = t.split(':').map(Number);
-				return h * 60 + m;
-			};
-			const minutes =
-				parse(dayData.morningEnd) -
-				parse(dayData.morningStart) +
-				(parse(dayData.afternoonEnd) - parse(dayData.afternoonStart));
-			totalMinutes += minutes;
-			const h = Math.floor(minutes / 60);
-			const m = minutes % 60;
-			row.push(`${h}:${m.toString().padStart(2, '0')}`);
+			// All work types (Lavoro, Permesso, Ferie, Malattia, etc.)
+			const mStart = dayData.morningStart?.trim() || '';
+			const mEnd = dayData.morningEnd?.trim() || '';
+			const aStart = dayData.afternoonStart?.trim() || '';
+			const aEnd = dayData.afternoonEnd?.trim() || '';
+
+			// Find first empty field to place the type label for non-Lavoro types
+			const fields = [mStart, mEnd, aStart, aEnd];
+			const firstEmptyIndex = fields.findIndex((f) => f === '');
+
+			// Build row with times or type label in first empty field
+			const rowFields = [mStart, mEnd, aStart, aEnd];
+			if (dayData.type !== 'Lavoro' && firstEmptyIndex >= 0) {
+				rowFields[firstEmptyIndex] = dayData.type;
+			}
+
+			row.push(...rowFields);
+
+			// Calculate hours if any times are present (excluding Sabato and Domenica)
+			let minutes = 0;
+
+			if (dayData.type !== 'Sabato' && dayData.type !== 'Domenica') {
+				const parse = (t: string) => {
+					if (!t || t.trim() === '') return 0;
+					const [h, m] = t.split(':').map(Number);
+					if (isNaN(h) || isNaN(m)) return 0;
+					return h * 60 + m;
+				};
+
+				const mStartMin = parse(mStart);
+				const mEndMin = parse(mEnd);
+				const aStartMin = parse(aStart);
+				const aEndMin = parse(aEnd);
+
+				if (mStartMin > 0 && mEndMin > 0) {
+					minutes += mEndMin - mStartMin;
+				}
+				if (aStartMin > 0 && aEndMin > 0) {
+					minutes += aEndMin - aStartMin;
+				}
+
+				totalMinutes += minutes;
+			}
+
+			if (minutes > 0) {
+				const h = Math.floor(minutes / 60);
+				const m = minutes % 60;
+				row.push(`${h}:${m.toString().padStart(2, '0')}`);
+			} else {
+				row.push('');
+			}
+
+			// Always add signature for non-weekend/non-holiday days
 			row.push(userName);
 		}
 		tableData.push(row);
@@ -174,12 +206,11 @@ export async function generateHoursPdf(
 			if (dayIndex < daysInMonth) {
 				const date = new Date(year, month, dayIndex + 1);
 				const dateStr = format(date, 'yyyy-MM-dd');
-				const day = days[dateStr];
 				const isHoliday = !!holidays[dateStr];
 				const isWknd = date.getDay() === 0 || date.getDay() === 6;
-				const type = day?.type || 'Lavoro';
 
-				if (type !== 'Lavoro' || isHoliday || isWknd) {
+				// Only gray background for holidays and weekends
+				if (isHoliday || isWknd) {
 					data.cell.styles.fillColor = [240, 240, 240];
 					data.cell.styles.fontStyle = 'italic';
 				}

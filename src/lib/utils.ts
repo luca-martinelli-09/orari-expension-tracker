@@ -19,11 +19,14 @@ export function formatDuration(minutes: number): string {
 }
 
 export function calculateHours(day: import('./types').WorkDay): number {
-	if (day.type !== 'Lavoro') return 0; // Or standard 8h for Ferie? Requirement says "Calcolo Ore Lavorate". Usually only actual work.
+	// Sabato and Domenica are always 0 hours
+	if (day.type === 'Sabato' || day.type === 'Domenica') return 0;
 
-	// Simple parser "HH:MM"
+	// Simple parser "HH:MM", returns 0 if empty or invalid
 	const parse = (t: string) => {
+		if (!t || t.trim() === '') return 0;
 		const [h, m] = t.split(':').map(Number);
+		if (isNaN(h) || isNaN(m)) return 0;
 		return h * 60 + m;
 	};
 
@@ -32,5 +35,17 @@ export function calculateHours(day: import('./types').WorkDay): number {
 	const aStart = parse(day.afternoonStart);
 	const aEnd = parse(day.afternoonEnd);
 
-	return mEnd - mStart + (aEnd - aStart);
+	let total = 0;
+
+	// Calculate morning hours only if both start and end are provided
+	if (mStart > 0 && mEnd > 0) {
+		total += mEnd - mStart;
+	}
+
+	// Calculate afternoon hours only if both start and end are provided
+	if (aStart > 0 && aEnd > 0) {
+		total += aEnd - aStart;
+	}
+
+	return total;
 }

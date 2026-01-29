@@ -162,10 +162,20 @@
 								{holiday}
 							</div>
 						{:else if dayData.type !== 'Lavoro'}
-							<div
-								class="text-[7px] md:text-[9px] font-black uppercase tracking-tight truncate border-t border-md-on-surface/10 pt-0.5 md:pt-1 opacity-60"
-							>
-								{dayData.type}
+							<div class="space-y-0.5">
+								<div
+									class="text-[7px] md:text-[9px] font-black uppercase tracking-tight truncate border-t border-md-on-surface/10 pt-0.5 md:pt-1 opacity-60"
+								>
+									{dayData.type}
+								</div>
+								{#if hours > 0}
+									<div
+										class="text-[8px] md:text-[10px] font-black flex items-center gap-0.5 md:gap-1"
+									>
+										<Clock size={10} class="md:w-3 md:h-3" strokeWidth={2.5} />
+										{formatDuration(hours)}
+									</div>
+								{/if}
 							</div>
 						{:else if hours > 0}
 							<div class="text-[8px] md:text-[10px] font-black flex items-center gap-0.5 md:gap-1">
