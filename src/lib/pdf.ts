@@ -3,7 +3,7 @@ import { it } from 'date-fns/locale';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { PDFDocument } from 'pdf-lib';
-import type { Expense, WorkDay } from './types';
+import type { Expense, WorkDay, DayType } from './types';
 
 export async function generateHoursPdf(
 	month: number,
@@ -34,8 +34,23 @@ export async function generateHoursPdf(
 		const date = new Date(year, month, d);
 		const dateStr = format(date, 'yyyy-MM-dd');
 		const day = days[dateStr];
+		const holidayName = holidays[dateStr];
+
+		let type: DayType;
+		if (day) {
+			type = day.type;
+		} else if (holidayName) {
+			type = 'Festivo';
+		} else if (date.getDay() === 0) {
+			type = 'Domenica';
+		} else if (date.getDay() === 6) {
+			type = 'Sabato';
+		} else {
+			type = 'Lavoro';
+		}
+
 		const dayData = day || {
-			type: 'Lavoro',
+			type,
 			morningStart: '08:30',
 			morningEnd: '13:00',
 			afternoonStart: '14:00',
@@ -44,12 +59,10 @@ export async function generateHoursPdf(
 		};
 
 		const row: string[] = [d.toString()];
-		const isWknd = date.getDay() === 0 || date.getDay() === 6;
-		const holidayName = holidays[dateStr];
 
-		if (holidayName) {
-			row.push(holidayName, '', '', '', '', '');
-		} else if (isWknd) {
+		if (type === 'Festivo') {
+			row.push(holidayName || 'Festivo', '', '', '', '', '');
+		} else if (type === 'Sabato' || type === 'Domenica') {
 			const dayName = format(date, 'EEEE', { locale: it });
 			row.push(dayName.charAt(0).toUpperCase() + dayName.slice(1), '', '', '', '', '');
 		} else {
@@ -206,11 +219,24 @@ export async function generateHoursPdf(
 			if (dayIndex < daysInMonth) {
 				const date = new Date(year, month, dayIndex + 1);
 				const dateStr = format(date, 'yyyy-MM-dd');
-				const isHoliday = !!holidays[dateStr];
-				const isWknd = date.getDay() === 0 || date.getDay() === 6;
+				const day = days[dateStr];
+				const holidayName = holidays[dateStr];
 
-				// Only gray background for holidays and weekends
-				if (isHoliday || isWknd) {
+				let type: DayType;
+				if (day) {
+					type = day.type;
+				} else if (holidayName) {
+					type = 'Festivo';
+				} else if (date.getDay() === 0) {
+					type = 'Domenica';
+				} else if (date.getDay() === 6) {
+					type = 'Sabato';
+				} else {
+					type = 'Lavoro';
+				}
+
+				const isGray = type === 'Festivo' || type === 'Sabato' || type === 'Domenica';
+				if (isGray) {
 					data.cell.styles.fillColor = [240, 240, 240];
 					data.cell.styles.fontStyle = 'italic';
 				}

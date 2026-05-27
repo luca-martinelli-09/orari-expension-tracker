@@ -25,13 +25,13 @@
 		'Domenica'
 	];
 
-	// Watch for type changes and clear hours if switching to Ferie, Permesso, or Malattia
+	// Watch for type changes and clear hours if switching to any non-Lavoro type
 	let previousType = $state<DayType>(day.type);
 
 	$effect(() => {
 		const currentType = day.type;
 		if (currentType !== previousType) {
-			if (currentType === 'Ferie' || currentType === 'Permesso' || currentType === 'Malattia') {
+			if (currentType !== 'Lavoro') {
 				day.morningStart = '';
 				day.morningEnd = '';
 				day.afternoonStart = '';

@@ -115,7 +115,7 @@
 
 				{@const isToday = new Date().toDateString() === date.toDateString()}
 
-				{@const isNonWork = holiday || isWknd || dayData.type !== 'Lavoro'}
+				{@const isNonWork = dayData.type !== 'Lavoro'}
 
 				<button
 					onclick={() => handleDayClick(date)}
@@ -155,7 +155,7 @@
 					</div>
 
 					<div class="flex flex-col gap-0.5 md:gap-1 mt-1 md:mt-2">
-						{#if holiday}
+						{#if dayData.type === 'Festivo'}
 							<div
 								class="text-[7px] md:text-[9px] font-black uppercase tracking-tight truncate opacity-60"
 							>
